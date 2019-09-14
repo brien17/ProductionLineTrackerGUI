@@ -8,41 +8,45 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/11.0.1"
+          xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
     <columnConstraints>
-        <ColumnConstraints />
+        <ColumnConstraints/>
     </columnConstraints>
     <rowConstraints>
-        <RowConstraints />
+        <RowConstraints/>
     </rowConstraints>
-    <children>
-        <TabPane prefHeight="426.0" prefWidth="390.0" tabClosingPolicy="UNAVAILABLE">
-            <tabs>
-                <Tab text="Product Line">
-                    <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Production Line Button" />
-                     </children></AnchorPane>
-                    </content>
-                </Tab>
-                <Tab text="Record Production">
-                    <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Button" />
-                     </children></AnchorPane>
-                    </content>
-                </Tab>
-                <Tab text="Production Log">
-                    <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Button" />
-                     </children></AnchorPane>
-                    </content>
-                </Tab>
-            </tabs>
-        </TabPane>
-    </children>
+
+    <TabPane prefHeight="426.0" prefWidth="390.0" tabClosingPolicy="UNAVAILABLE">
+
+        <Tab text="Product Line">
+
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+
+                <Button fx:id="productionLineButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false"
+                        onMouseClicked="#productionLineButtonAction" text="Production Line"/>
+            </AnchorPane>
+
+        </Tab>
+        <Tab text="Record Production">
+
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+
+                <Button fx:id="recordProductionButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false"
+                        onMouseClicked="#recordProductionButtonAction" text="Record Production"/>
+            </AnchorPane>
+
+        </Tab>
+        <Tab text="Production Log">
+
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+
+                <Button fx:id="productionLogButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false"
+                        onMouseClicked="#productionLogButtonAction" text="Production Log"/>
+            </AnchorPane>
+
+        </Tab>
+
+    </TabPane>
+
 </GridPane>
