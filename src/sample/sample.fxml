@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- This is the fxml file for my java fx application. This specifies how to elements of the application should
-appear -->
+<!-- Cameron Brien -->
+<!-- 9/15/2019 -->
+<!-- This is the fxml file for my java fx application. This specifies how to elements of the application
+should appear. -->
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Tab?>
