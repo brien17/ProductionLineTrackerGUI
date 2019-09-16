@@ -1,3 +1,9 @@
+/*
+Cameron Brien
+This is the main file for my java fx application. This file contains the methods to launch the
+application.
+ */
+
 package sample;
 
 import javafx.application.Application;
@@ -7,9 +13,9 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- * This is the main method of my program.
+ * This is the main class of my program.
  *
- * @author cam
+ * @author Cameron Brien
  */
 public class Main extends Application {
   /**
@@ -26,6 +32,11 @@ public class Main extends Application {
     primaryStage.show();
   }
 
+  /**
+   * This is the main method of my program that launches the application.
+   *
+   * @param args The application to be launched
+   */
   public static void main(String[] args) {
     launch(args);
   }
