@@ -13,6 +13,7 @@ import javafx.scene.input.MouseEvent;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 
 /**
  * This is the controller for my application.
@@ -33,11 +34,22 @@ public class Controller {
 
   @FXML private ListView<?> chooseProduct;
 
-  @FXML private ComboBox<?> chooseQuantity;
+  @FXML private ComboBox<Integer> chooseQuantity;
 
   @FXML private TextArea productionLogTextArea;
 
   // Methods
+    /**
+     * This method runs when the app is opened and populates the choose quantity combo box.
+     */
+  @FXML
+  public void initialize() {
+    for (int i = 1; i < 11; i++) {
+      chooseQuantity.getItems().add(i);
+      chooseQuantity.getSelectionModel().selectFirst();
+      chooseQuantity.setEditable(true);
+    }
+  }
   /**
    * This method runs when the production line button is clicked.
    *
@@ -47,6 +59,18 @@ public class Controller {
   public void productionLineButtonAction(MouseEvent event) {
     System.out.println("production line button clicked");
     Connection conn = connectToDatabase();
+    try {
+      PreparedStatement pstmt =
+          conn.prepareStatement("INSERT INTO PRODUCT (TYPE, MANUFACTURER, NAME) VALUES (?,?,?)");
+      pstmt.setString(1, "AUDIO");
+      pstmt.setString(2, "Apple");
+      pstmt.setString(3, "ipod");
+      pstmt.execute();
+      pstmt.close();
+      conn.close();
+    } catch (Exception e) {
+
+    }
   }
 
   /**
@@ -59,10 +83,14 @@ public class Controller {
     System.out.println("record production button clicked");
   }
 
+    /**
+     * This method connects to the database and returns a connection object.
+     * @return
+     */
   public Connection connectToDatabase() {
     final String JDBC_DRIVER = "org.h2.Driver";
     final String DB_URL =
-            "jdbc:h2:C:/Users/cam12/OneDrive - Florida Gulf Coast University/OOP/ProductionLineTrackerGUI/res";
+        "jdbc:h2:C:/Users/cam12/OneDrive - Florida Gulf Coast University/OOP/ProductionLineTrackerGUI/res";
     try {
       // STEP 1: Register JDBC driver
       Class.forName(JDBC_DRIVER);
