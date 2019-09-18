@@ -8,8 +8,11 @@ are performed in the application.
 package sample;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
 
 /**
  * This is the controller for my application.
@@ -17,30 +20,33 @@ import javafx.scene.input.MouseEvent;
  * @author Cameron Brien
  */
 public class Controller {
+  // Fields
+  @FXML private TextField productName;
+
+  @FXML private TextField manufacturer;
+
+  @FXML private ChoiceBox<?> type;
+
   @FXML private Button productionLineButton;
 
   @FXML private Button recordProductionButton;
 
-  @FXML private Button productionLogButton;
+  @FXML private ListView<?> chooseProduct;
 
+  @FXML private ComboBox<?> chooseQuantity;
+
+  @FXML private TextArea productionLogTextArea;
+
+  // Methods
   /**
    * This method runs when the production line button is clicked.
    *
    * @param event The event is the mouse button being clicked
    */
   @FXML
-  void productionLineButtonAction(MouseEvent event) {
+  public void productionLineButtonAction(MouseEvent event) {
     System.out.println("production line button clicked");
-  }
-
-  /**
-   * This method runs when the production log button is clicked.
-   *
-   * @param event The event is the mouse button being clicked
-   */
-  @FXML
-  void productionLogButtonAction(MouseEvent event) {
-    System.out.println("production log button clicked");
+    Connection conn = connectToDatabase();
   }
 
   /**
@@ -49,7 +55,24 @@ public class Controller {
    * @param event The event is the mouse button being clicked
    */
   @FXML
-  void recordProductionButtonAction(MouseEvent event) {
+  public void recordProductionButtonAction(MouseEvent event) {
     System.out.println("record production button clicked");
+  }
+
+  public Connection connectToDatabase() {
+    final String JDBC_DRIVER = "org.h2.Driver";
+    final String DB_URL =
+            "jdbc:h2:C:/Users/cam12/OneDrive - Florida Gulf Coast University/OOP/ProductionLineTrackerGUI/res";
+    try {
+      // STEP 1: Register JDBC driver
+      Class.forName(JDBC_DRIVER);
+
+      // STEP 2: Open a connection
+      Connection conn = DriverManager.getConnection(DB_URL);
+      return conn;
+    } catch (Exception e) {
+      e.printStackTrace();
+      return null;
+    }
   }
 }
