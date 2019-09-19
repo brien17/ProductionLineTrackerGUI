@@ -7,13 +7,17 @@ are performed in the application.
 
 package sample;
 
-import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+
 
 /**
  * This is the controller for my application.
@@ -39,9 +43,7 @@ public class Controller {
   @FXML private TextArea productionLogTextArea;
 
   // Methods
-    /**
-     * This method runs when the app is opened and populates the choose quantity combo box.
-     */
+  /** This method runs when the app is opened and populates the choose quantity combo box. */
   @FXML
   public void initialize() {
     for (int i = 1; i < 11; i++) {
@@ -50,18 +52,19 @@ public class Controller {
       chooseQuantity.setEditable(true);
     }
   }
+
   /**
    * This method runs when the production line button is clicked.
-   *
-   * @param event The event is the mouse button being clicked
    */
   @FXML
-  public void productionLineButtonAction(MouseEvent event) {
+  public void productionLineButtonAction() {
     System.out.println("production line button clicked");
-    Connection conn = connectToDatabase();
     try {
+      Connection conn = connectToDatabase();
+
       PreparedStatement pstmt =
           conn.prepareStatement("INSERT INTO PRODUCT (TYPE, MANUFACTURER, NAME) VALUES (?,?,?)");
+
       pstmt.setString(1, "AUDIO");
       pstmt.setString(2, "Apple");
       pstmt.setString(3, "ipod");
@@ -69,35 +72,32 @@ public class Controller {
       pstmt.close();
       conn.close();
     } catch (Exception e) {
-
+      e.printStackTrace();
     }
   }
 
   /**
    * This method runs when the record production button is clicked.
-   *
-   * @param event The event is the mouse button being clicked
    */
   @FXML
-  public void recordProductionButtonAction(MouseEvent event) {
+  public void recordProductionButtonAction() {
     System.out.println("record production button clicked");
   }
 
-    /**
-     * This method connects to the database and returns a connection object.
-     * @return
-     */
-  public Connection connectToDatabase() {
-    final String JDBC_DRIVER = "org.h2.Driver";
-    final String DB_URL =
-        "jdbc:h2:C:/Users/cam12/OneDrive - Florida Gulf Coast University/OOP/ProductionLineTrackerGUI/res";
+  /**
+   * This method connects to the database and returns a connection object.
+   *
+   * @return A database connection object
+   */
+  private Connection connectToDatabase() {
     try {
       // STEP 1: Register JDBC driver
-      Class.forName(JDBC_DRIVER);
+      Class.forName("org.h2.Driver");
 
       // STEP 2: Open a connection
-      Connection conn = DriverManager.getConnection(DB_URL);
-      return conn;
+      return DriverManager.getConnection(
+          "jdbc:h2:C:/Users/cam12/OneDrive - Florida Gulf Coast University/OOP/"
+              + "ProductionLineTrackerGUI/res");
     } catch (Exception e) {
       e.printStackTrace();
       return null;
