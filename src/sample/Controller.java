@@ -18,13 +18,12 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
-
 /**
  * This is the controller for my application.
  *
  * @author Cameron Brien
  */
-public class Controller {
+public class Controller { // inspect code says can be package private, but won't compile if it is
   // Fields
   @FXML private TextField productName;
 
@@ -54,7 +53,8 @@ public class Controller {
   }
 
   /**
-   * This method runs when the production line button is clicked.
+   * This method runs when the production line button is clicked and adds the information specified
+   * to the database.
    */
   @FXML
   public void productionLineButtonAction() {
@@ -62,7 +62,7 @@ public class Controller {
     try {
       Connection conn = connectToDatabase();
 
-      PreparedStatement pstmt =
+      PreparedStatement pstmt = // findbugs error here can't figure out how to fix
           conn.prepareStatement("INSERT INTO PRODUCT (TYPE, MANUFACTURER, NAME) VALUES (?,?,?)");
 
       pstmt.setString(1, "AUDIO");
@@ -76,9 +76,7 @@ public class Controller {
     }
   }
 
-  /**
-   * This method runs when the record production button is clicked.
-   */
+  /** This method runs when the record production button is clicked. */
   @FXML
   public void recordProductionButtonAction() {
     System.out.println("record production button clicked");
@@ -96,7 +94,8 @@ public class Controller {
 
       // STEP 2: Open a connection
       return DriverManager.getConnection(
-          "jdbc:h2:C:/Users/Cam/OneDrive - Florida Gulf Coast University/OOP/ProductionLineTrackerGUI/res");
+          "jdbc:h2:C:/Users/cam12/OneDrive - Florida Gulf Coast University/OOP/"
+              + "ProductionLineTrackerGUI/res");
     } catch (Exception e) {
       e.printStackTrace();
       return null;

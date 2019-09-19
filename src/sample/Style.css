@@ -1,0 +1,12 @@
+/*
+Cameron Brien
+9/19/2019
+This is the css file that styles the content stored in he sample.fxml file.
+ */
+#label {
+    -fx-font-weight: bold;
+}
+
+#button:hover {
+    -fx-background-color: linear-gradient(#999999, #c2c2c2);
+}

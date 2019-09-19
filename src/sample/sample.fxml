@@ -16,6 +16,7 @@ should appear. -->
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -30,33 +31,46 @@ should appear. -->
         <RowConstraints/>
     </rowConstraints>
 
-    <TabPane prefHeight="426.0" prefWidth="390.0" tabClosingPolicy="UNAVAILABLE">
+    <TabPane id="tab_pane" prefHeight="426.0" prefWidth="390.0" stylesheets="@Style.css" tabClosingPolicy="UNAVAILABLE">
 
         <Tab text="Product Line">
 
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                 <GridPane prefHeight="157.0" prefWidth="390.0">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="188.0" minWidth="10.0" prefWidth="115.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="279.0" minWidth="10.0" prefWidth="275.0"/>
                     </columnConstraints>
                     <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                     </rowConstraints>
-                    <Label text="Product Name"/>
-                    <Label text="Manufacturer" GridPane.rowIndex="1"/>
-                    <Label text="Type" GridPane.rowIndex="2"/>
-                    <TextField fx:id="productName" GridPane.columnIndex="1"/>
-                    <TextField fx:id="manufacturer" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-                    <ChoiceBox fx:id="type" prefHeight="31.0" prefWidth="198.0" GridPane.columnIndex="1"
-                               GridPane.rowIndex="2"/>
+                    <Label id="label" stylesheets="@Style.css" text="Product Name"/>
+                    <Label id="label" stylesheets="@Style.css" text="Manufacturer" GridPane.rowIndex="1"/>
+                    <Label id="label" stylesheets="@Style.css" text="Type" GridPane.rowIndex="2"/>
+                    <TextField id="user_text_field" fx:id="productName" stylesheets="@Style.css"
+                               GridPane.columnIndex="1">
+                        <effect>
+                            <DropShadow height="10.0" radius="4.5" width="10.0"/>
+                        </effect>
+                    </TextField>
+                    <TextField fx:id="manufacturer" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <effect>
+                            <DropShadow height="10.0" radius="4.5" width="10.0"/>
+                        </effect>
+                    </TextField>
+                    <ChoiceBox fx:id="type" prefHeight="31.0" prefWidth="276.0" GridPane.columnIndex="1"
+                               GridPane.rowIndex="2">
+                        <effect>
+                            <DropShadow height="10.0" radius="4.5" width="10.0"/>
+                        </effect>
+                    </ChoiceBox>
                 </GridPane>
 
-                <Button fx:id="productionLineButton" layoutX="286.0" layoutY="157.0" mnemonicParsing="false"
-                        onMouseClicked="#productionLineButtonAction" text="Add Product"/>
-                <Label layoutY="188.0" text="Existing Products"/>
+                <Button id="button" fx:id="productionLineButton" layoutX="286.0" layoutY="157.0" mnemonicParsing="false"
+                        onMouseClicked="#productionLineButtonAction" stylesheets="@Style.css" text="Add Product"/>
+                <Label id="label" layoutY="188.0" stylesheets="@Style.css" text="Existing Products"/>
                 <TableView layoutY="209.0" prefHeight="180.0" prefWidth="390.0">
                     <columns>
                         <TableColumn prefWidth="75.0" text="C1"/>
@@ -70,8 +84,9 @@ should appear. -->
 
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
 
-                <Button fx:id="recordProductionButton" layoutX="232.0" layoutY="267.0" mnemonicParsing="false"
-                        onMouseClicked="#recordProductionButtonAction" text="Record Production"/>
+                <Button id="button" fx:id="recordProductionButton" layoutX="232.0" layoutY="267.0"
+                        mnemonicParsing="false" onMouseClicked="#recordProductionButtonAction" stylesheets="@Style.css"
+                        text="Record Production"/>
                 <Label layoutX="14.0" layoutY="14.0" text="Choose Product"/>
                 <ListView fx:id="chooseProduct" layoutX="14.0" layoutY="35.0" prefHeight="135.0" prefWidth="362.0"/>
                 <Label layoutX="14.0" layoutY="183.0" text="Choose Quantity"/>
