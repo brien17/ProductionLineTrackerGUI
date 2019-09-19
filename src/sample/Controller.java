@@ -95,7 +95,7 @@ public class Controller { // inspect code says can be package private, but won't
       // STEP 2: Open a connection
       return DriverManager.getConnection(
           "jdbc:h2:C:/Users/cam12/OneDrive - Florida Gulf Coast University/OOP/"
-              + "ProductionLineTrackerGUI/res");
+              + "ProductionLineTrackerGUI/res","","");
     } catch (Exception e) {
       e.printStackTrace();
       return null;
