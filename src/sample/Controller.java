@@ -96,8 +96,7 @@ public class Controller {
 
       // STEP 2: Open a connection
       return DriverManager.getConnection(
-          "jdbc:h2:C:/Users/cam12/OneDrive - Florida Gulf Coast University/OOP/"
-              + "ProductionLineTrackerGUI/res");
+          "jdbc:h2:C:/Users/Cam/OneDrive - Florida Gulf Coast University/OOP/ProductionLineTrackerGUI/res");
     } catch (Exception e) {
       e.printStackTrace();
       return null;
