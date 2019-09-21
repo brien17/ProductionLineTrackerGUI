@@ -45,11 +45,12 @@ public class Controller { // inspect code says can be package private, but won't
   /** This method runs when the app is opened and populates the choose quantity combo box. */
   @FXML
   public void initialize() {
+    // Adding numbers to the quantity selector
     for (int i = 1; i < 11; i++) {
       chooseQuantity.getItems().add(i);
-      chooseQuantity.getSelectionModel().selectFirst();
-      chooseQuantity.setEditable(true);
     }
+    chooseQuantity.getSelectionModel().selectFirst();
+    chooseQuantity.setEditable(true);
   }
 
   /**
@@ -59,10 +60,16 @@ public class Controller { // inspect code says can be package private, but won't
   @FXML
   public void productionLineButtonAction() {
     System.out.println("production line button clicked");
-    try {
-      Connection conn = connectToDatabase();
 
-      PreparedStatement pstmt = // findbugs error here can't figure out how to fix
+    // Declaring the connection object
+    Connection conn = null;
+    try {
+      // Getting a connection to the database
+      conn = connectToDatabase();
+
+      // Making a statement and running it
+      // Inspect code says possible null pointer here but is already in a try block
+      PreparedStatement pstmt =
           conn.prepareStatement("INSERT INTO PRODUCT (TYPE, MANUFACTURER, NAME) VALUES (?,?,?)");
 
       pstmt.setString(1, "AUDIO");
@@ -73,10 +80,20 @@ public class Controller { // inspect code says can be package private, but won't
       conn.close();
     } catch (Exception e) {
       e.printStackTrace();
+
+      // This looks hideous but findBugs is mad otherwise maybe some way to make look better
+      // in the future
+      if (conn != null) {
+        try {
+          conn.close();
+        } catch (Exception r) {
+          System.out.println("closed");
+        }
+      }
     }
   }
 
-  /** This method runs when the record production button is clicked. */
+  /** This method runs when the record production button is clicked and prints to the console. */
   @FXML
   public void recordProductionButtonAction() {
     System.out.println("record production button clicked");
@@ -89,10 +106,10 @@ public class Controller { // inspect code says can be package private, but won't
    */
   private Connection connectToDatabase() {
     try {
-      // STEP 1: Register JDBC driver
+      // Registering the driver
       Class.forName("org.h2.Driver");
 
-      // STEP 2: Open a connection
+      // Creating and returning connection object
       return DriverManager.getConnection(
           "jdbc:h2:C:/Users/cam12/OneDrive - Florida Gulf Coast University/OOP/"
               + "ProductionLineTrackerGUI/res");
