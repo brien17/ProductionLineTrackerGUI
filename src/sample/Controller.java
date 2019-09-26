@@ -29,7 +29,7 @@ public class Controller { // inspect code says can be package private, but won't
 
   @FXML private TextField manufacturer;
 
-  @FXML private ChoiceBox<?> type;
+  @FXML private ChoiceBox<ItemType> type;
 
   @FXML private Button productionLineButton;
 
@@ -37,7 +37,7 @@ public class Controller { // inspect code says can be package private, but won't
 
   @FXML private ListView<?> chooseProduct;
 
-  @FXML private ComboBox<Integer> chooseQuantity;
+  @FXML private ComboBox<String> chooseQuantity;
 
   @FXML private TextArea productionLogTextArea;
 
@@ -45,9 +45,15 @@ public class Controller { // inspect code says can be package private, but won't
   /** This method runs when the app is opened and populates the choose quantity combo box. */
   @FXML
   public void initialize() {
+    // Adding values to they type choice box
+    for (ItemType it : ItemType.values()) {
+      type.getItems().add(it);
+    }
+
     // Adding numbers to the quantity selector
     for (int i = 1; i < 11; i++) {
-      chooseQuantity.getItems().add(i);
+      String number = "" + i;
+      chooseQuantity.getItems().add(number);
     }
     chooseQuantity.getSelectionModel().selectFirst();
     chooseQuantity.setEditable(true);
@@ -93,10 +99,20 @@ public class Controller { // inspect code says can be package private, but won't
     }
   }
 
-  /** This method runs when the record production button is clicked and prints to the console. */
+  /**
+   * This method runs when the record production button is clicked and prints the number of items
+   * that were produced to the console.
+   */
   @FXML
   public void recordProductionButtonAction() {
+    String quantity = chooseQuantity.getValue();
     System.out.println("record production button clicked");
+    try {
+      int numProduced = Integer.parseInt(quantity);
+      System.out.println("Produced: " + numProduced);
+    } catch (NumberFormatException ex) {
+      System.out.println("Please enter only numbers");
+    }
   }
 
   /**
@@ -105,14 +121,15 @@ public class Controller { // inspect code says can be package private, but won't
    * @return A database connection object
    */
   private Connection connectToDatabase() {
+    final String dataBaseUrl =
+        "jdbc:h2:C:/Users/cam12/OneDrive - Florida Gulf Coast University/OOP/"
+            + "ProductionLineTrackerGUI/res";
     try {
       // Registering the driver
       Class.forName("org.h2.Driver");
 
       // Creating and returning connection object
-      return DriverManager.getConnection(
-          "jdbc:h2:C:/Users/cam12/OneDrive - Florida Gulf Coast University/OOP/"
-              + "ProductionLineTrackerGUI/res");
+      return DriverManager.getConnection(dataBaseUrl);
     } catch (Exception e) {
       e.printStackTrace();
       return null;
