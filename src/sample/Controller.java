@@ -121,15 +121,17 @@ public class Controller { // inspect code says can be package private, but won't
    * @return A database connection object
    */
   private Connection connectToDatabase() {
-    final String dataBaseUrl =
+    String dataBaseUrl =
         "jdbc:h2:C:/Users/cam12/OneDrive - Florida Gulf Coast University/OOP/"
             + "ProductionLineTrackerGUI/res";
+    String userName = "";
+    String pass = "";
     try {
       // Registering the driver
       Class.forName("org.h2.Driver");
 
       // Creating and returning connection object
-      return DriverManager.getConnection(dataBaseUrl);
+      return DriverManager.getConnection(dataBaseUrl, userName, pass);
     } catch (Exception e) {
       e.printStackTrace();
       return null;
