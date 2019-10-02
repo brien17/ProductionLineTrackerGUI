@@ -27,9 +27,9 @@ public class Controller { // inspect code says can be package private, but won't
   // Fields
   @FXML private TextField productName;
 
-  @FXML private TextField manufacturer;
+  @FXML private TextField productManufacturer;
 
-  @FXML private ChoiceBox<ItemType> type;
+  @FXML private ChoiceBox<ItemType> productType;
 
   @FXML private Button productionLineButton;
 
@@ -47,7 +47,7 @@ public class Controller { // inspect code says can be package private, but won't
   public void initialize() {
     // Adding values to they type choice box
     for (ItemType it : ItemType.values()) {
-      type.getItems().add(it);
+      productType.getItems().add(it);
     }
 
     // Adding numbers to the quantity selector
@@ -69,7 +69,16 @@ public class Controller { // inspect code says can be package private, but won't
 
     // Declaring the connection object
     Connection conn = null;
+      String name = productName.getText();
+      String manufacturer = productManufacturer.getText();
     try {
+
+
+
+      ItemType item = productType.getValue();
+      Widget product = new Widget(name, manufacturer, item.code);
+
+
       // Getting a connection to the database
       conn = connectToDatabase();
 
@@ -78,12 +87,15 @@ public class Controller { // inspect code says can be package private, but won't
       PreparedStatement pstmt =
           conn.prepareStatement("INSERT INTO PRODUCT (TYPE, MANUFACTURER, NAME) VALUES (?,?,?)");
 
-      pstmt.setString(1, "AUDIO");
-      pstmt.setString(2, "Apple");
-      pstmt.setString(3, "ipod");
+      pstmt.setString(1, product.getType());
+      pstmt.setString(2, product.getManufacturer());
+      pstmt.setString(3, product.getName());
       pstmt.execute();
       pstmt.close();
       conn.close();
+
+    } catch (NullPointerException npe) {
+      System.out.println("Please complete all fields");
     } catch (Exception e) {
       e.printStackTrace();
 
@@ -93,7 +105,7 @@ public class Controller { // inspect code says can be package private, but won't
         try {
           conn.close();
         } catch (Exception r) {
-          System.out.println("closed");
+          System.out.println("already closed");
         }
       }
     }

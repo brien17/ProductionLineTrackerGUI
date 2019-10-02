@@ -2,10 +2,10 @@ package sample;
 
 public abstract class Product implements Item {
   // Fields
-  int id;
-  String name;
-  String manufacturer;
-  String type;
+  private int id;
+  private String name;
+  private String manufacturer;
+  private String type;
 
 
   // Methods
@@ -60,6 +60,14 @@ public abstract class Product implements Item {
     return manufacturer;
   }
 
+  public void setType(String type) {
+      this.type = type;
+  }
+
+  public String getType(){
+      return type;
+  }
+
   /**
    * This methods returns a string object containing information about the name, type, and
    * manufacturer of the product, in a cleanly displayable format.
@@ -69,4 +77,10 @@ public abstract class Product implements Item {
   public String toString() {
     return "Name: " + name + "\nManufacturer: " + manufacturer + "\nType: " + type;
   }
+}
+
+class Widget extends Product implements Item {
+    Widget(String name, String manufacturer, String type) {
+        super(name, manufacturer, type);
+    }
 }
