@@ -163,23 +163,30 @@ public class Controller { // inspect code says can be package private, but won't
     epColType.setCellValueFactory(new PropertyValueFactory<>("type"));
 
     try {
-      // Making a statement and running it
+      // Making a statement
       // Inspect code says possible null pointer here but is already in a try block
       Statement stmt = conn.createStatement();
 
+      // Executing query and collecting results
       ResultSet rs = stmt.executeQuery("SELECT * FROM PRODUCT");
-      // Creating product objects from the database information
+
+      // Looping through results
       while (rs.next()) {
+        // Storing data
         int id = Integer.parseInt(rs.getString(1));
         String name = rs.getString(2);
         String manufacturer = rs.getString(3);
         String type = rs.getString(4);
-        // Adding those objects to the array list
+        // Creating product objects from the database information
         Widget product = new Widget(id, name, manufacturer, type);
+        // Adding those objects to the array list
         products.add(product);
       }
-      ObservableList<Product> productObservableList = FXCollections.observableArrayList(products);
-      existingProducts.setItems(productObservableList);
+
+      // Adding items to the existingProducts table view
+      existingProducts.setItems(FXCollections.observableArrayList(products));
+      // Closing statement
+      stmt.close();
     } catch (NullPointerException npe) {
       System.out.println("Null Pointer");
 
