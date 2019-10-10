@@ -87,10 +87,12 @@ should appear. -->
                       <Button id="button" fx:id="productionLineButton" alignment="CENTER_RIGHT" mnemonicParsing="false" onMouseClicked="#productionLineButtonAction" stylesheets="@Style.css" text="Add Product" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
                 </GridPane>
                 <Label id="label" layoutY="188.0" stylesheets="@Style.css" text="Existing Products" />
-                <TableView layoutY="209.0" prefHeight="439.0" prefWidth="686.0">
+                <TableView fx:id="existingProducts" layoutY="209.0" prefHeight="439.0" prefWidth="686.0">
                     <columns>
-                        <TableColumn prefWidth="75.0" text="C1" />
-                        <TableColumn prefWidth="75.0" text="C2" />
+                        <TableColumn fx:id="epColId" prefWidth="125.0" text="Product ID" />
+                        <TableColumn fx:id="epColName" minWidth="0.0" prefWidth="125.0" text="Name" />
+                  <TableColumn fx:id="epColMan" prefWidth="125.0" text="Manufacturer" />
+                  <TableColumn fx:id="epColType" prefWidth="125.0" text="Item Type" />
                     </columns>
                 </TableView>
             </AnchorPane>

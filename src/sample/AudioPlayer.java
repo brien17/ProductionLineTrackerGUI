@@ -2,8 +2,8 @@ package sample;
 
 public class AudioPlayer extends Product implements MultimediaControl {
   // fields
-  String audioSpecification;
-  String mediaType;
+  private String audioSpecification;
+  private String mediaType;
 
   // methods
 

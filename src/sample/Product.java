@@ -7,9 +7,16 @@ public abstract class Product implements Item {
   private String manufacturer;
   private String type;
 
-
   // Methods
+
   public Product(String name, String manufacturer, String type) {
+    this.name = name;
+    this.manufacturer = manufacturer;
+    this.type = type;
+  }
+
+  public Product(int id, String name, String manufacturer, String type) {
+    this.id = id;
     this.name = name;
     this.manufacturer = manufacturer;
     this.type = type;
@@ -60,12 +67,22 @@ public abstract class Product implements Item {
     return manufacturer;
   }
 
+  /**
+   * This method is a setter for the type field.
+   *
+   * @param type The value to set the type field to
+   */
   public void setType(String type) {
-      this.type = type;
+    this.type = type;
   }
 
-  public String getType(){
-      return type;
+  /**
+   * This method is a getter for the type field.
+   *
+   * @return The type field
+   */
+  public String getType() {
+    return type;
   }
 
   /**
@@ -80,7 +97,11 @@ public abstract class Product implements Item {
 }
 
 class Widget extends Product implements Item {
-    Widget(String name, String manufacturer, String type) {
-        super(name, manufacturer, type);
-    }
+  Widget(String name, String manufacturer, String type) {
+    super(name, manufacturer, type);
+  }
+
+  Widget(int id, String name, String manufacturer, String type) {
+    super(id, name, manufacturer, type);
+  }
 }

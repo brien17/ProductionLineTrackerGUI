@@ -8,9 +8,11 @@ This is the css file that styles the content stored in he sample.fxml file.
 }
 
 #button:hover {
-    -fx-background-color: linear-gradient(#999999, #c2c2c2);
+    -fx-background-color: linear-gradient(#0474bf, #0098ff);
 }
 
 #button {
-
+    -fx-background-color: linear-gradient(#0098ff, #42b3ff);
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
 }

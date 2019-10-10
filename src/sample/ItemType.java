@@ -6,7 +6,6 @@ This is an enumerator to hold my data types and the type code associated with th
 
 package sample;
 
-
 public enum ItemType {
   Audio("AU"),
   Visual("VI"),
