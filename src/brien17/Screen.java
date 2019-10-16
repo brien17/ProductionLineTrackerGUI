@@ -1,4 +1,4 @@
-package sample;
+package brien17;
 
 public class Screen implements ScreenSpec {
   // fields
@@ -39,11 +39,12 @@ public class Screen implements ScreenSpec {
   }
 
   public String toString() {
-    return "Resolution: "
-        + resolution
-        + "\nRefresh Rate: "
-        + refreshRate
-        + "\nResponse Time: "
-        + responseTime;
+    return "Screen:"
+            + "\nResolution: "
+            + resolution
+            + "\nRefresh rate: "
+            + refreshRate
+            + "\nResponse time: "
+            + responseTime;
   }
 }

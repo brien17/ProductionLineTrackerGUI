@@ -1,4 +1,4 @@
-package sample;
+package brien17;
 
 public class MoviePlayer extends Product implements MultimediaControl {
   // fields
@@ -9,7 +9,7 @@ public class MoviePlayer extends Product implements MultimediaControl {
 
   // constructor
   public MoviePlayer(String name, String manufacturer, Screen screen, MonitorType monitorType) {
-    super(name, manufacturer, "VISUAL");
+    super(name, manufacturer, ItemType.valueOf("Visual"));
 
     this.monitorType = monitorType;
     this.screen = screen;

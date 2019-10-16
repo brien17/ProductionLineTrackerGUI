@@ -1,4 +1,4 @@
-package sample;
+package brien17;
 
 public class AudioPlayer extends Product implements MultimediaControl {
   // fields
@@ -10,7 +10,7 @@ public class AudioPlayer extends Product implements MultimediaControl {
   // constructor
   public AudioPlayer(
       String name, String manufacturer, String audioSpecification, String mediaType) {
-    super(name, manufacturer, "AUDIO");
+    super(name, manufacturer, ItemType.valueOf("Audio"));
     this.audioSpecification = audioSpecification;
     this.mediaType = mediaType;
   }

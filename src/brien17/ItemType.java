@@ -4,7 +4,7 @@ Cameron Brien
 This is an enumerator to hold my data types and the type code associated with them.
  */
 
-package sample;
+package brien17;
 
 public enum ItemType {
   Audio("AU"),

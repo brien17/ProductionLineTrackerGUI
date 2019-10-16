@@ -1,21 +1,21 @@
-package sample;
+package brien17;
 
 public abstract class Product implements Item {
   // Fields
   private int id;
   private String name;
   private String manufacturer;
-  private String type;
+  private ItemType type;
 
   // Methods
 
-  public Product(String name, String manufacturer, String type) {
+  public Product(String name, String manufacturer, ItemType type) {
     this.name = name;
     this.manufacturer = manufacturer;
     this.type = type;
   }
 
-  public Product(int id, String name, String manufacturer, String type) {
+  public Product(int id, String name, String manufacturer, ItemType type) {
     this.id = id;
     this.name = name;
     this.manufacturer = manufacturer;
@@ -72,7 +72,7 @@ public abstract class Product implements Item {
    *
    * @param type The value to set the type field to
    */
-  public void setType(String type) {
+  public void setType(ItemType type) {
     this.type = type;
   }
 
@@ -81,7 +81,7 @@ public abstract class Product implements Item {
    *
    * @return The type field
    */
-  public String getType() {
+  public ItemType getType() {
     return type;
   }
 
@@ -96,12 +96,3 @@ public abstract class Product implements Item {
   }
 }
 
-class Widget extends Product implements Item {
-  Widget(String name, String manufacturer, String type) {
-    super(name, manufacturer, type);
-  }
-
-  Widget(int id, String name, String manufacturer, String type) {
-    super(id, name, manufacturer, type);
-  }
-}

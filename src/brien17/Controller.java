@@ -4,7 +4,7 @@
  *
  * @author Cameron Brien
  */
-package sample;
+package brien17;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,8 +12,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
@@ -55,9 +55,14 @@ public class Controller { // inspect code says can be package private, but won't
 
   private Connection conn;
   private ArrayList<Product> products = new ArrayList<>();
+  private int lastId;
 
   // Methods
-  /** This method runs when the app is opened and populates the choose quantity combo box. */
+  /**
+   * This method runs when the app is opened and populates the productType and chooseQuantity boxes.
+   * It them connects to the database and populates the product line arrayList with the data in the
+   * database.
+   */
   @FXML
   public void initialize() {
     // Adding values to they type choice box
@@ -75,6 +80,7 @@ public class Controller { // inspect code says can be package private, but won't
     testMultimedia();
     connectToDatabase();
     populateProductLine();
+    displayProductionLog();
   }
 
   /**
@@ -90,8 +96,11 @@ public class Controller { // inspect code says can be package private, but won't
     String manufacturer = productManufacturer.getText();
     ItemType item = productType.getValue();
     try {
+      // Incrementing the last ID value
+      lastId++;
+
       // Creating product specified
-      Widget product = new Widget(name, manufacturer, item.code);
+      Widget product = new Widget(lastId, name, manufacturer, item);
 
       // Adding to products array list
       products.add(product);
@@ -104,7 +113,7 @@ public class Controller { // inspect code says can be package private, but won't
       PreparedStatement pstmt =
           conn.prepareStatement("INSERT INTO PRODUCT (TYPE, MANUFACTURER, NAME) VALUES (?,?,?)");
 
-      pstmt.setString(1, product.getType());
+      pstmt.setString(1, product.getType().code);
       pstmt.setString(2, product.getManufacturer());
       pstmt.setString(3, product.getName());
       pstmt.execute();
@@ -135,9 +144,7 @@ public class Controller { // inspect code says can be package private, but won't
   }
 
   /**
-   * This method connects to the database and returns a connection object.
-   *
-   * @return A database connection object
+   * This method connects to the database and saves that connection object as a field.
    */
   private void connectToDatabase() {
     String dataBaseUrl =
@@ -172,16 +179,37 @@ public class Controller { // inspect code says can be package private, but won't
 
       // Looping through results
       while (rs.next()) {
-        // Storing data
+        // Storing data into variables
         int id = Integer.parseInt(rs.getString(1));
         String name = rs.getString(2);
-        String manufacturer = rs.getString(3);
-        String type = rs.getString(4);
+        String type = rs.getString(3);
+        String manufacturer = rs.getString(4);
+        // Getting the proper item type from the code
+        ItemType item;
+        switch (type) {
+          case "AM":
+            item = ItemType.AudioMobile;
+            break;
+          case "AU":
+            item = ItemType.Audio;
+            break;
+          case "VI":
+            item = ItemType.Visual;
+            break;
+          case "VM":
+            item = ItemType.VisualMobile;
+            break;
+          default:
+            item = null;
+        }
         // Creating product objects from the database information
-        Widget product = new Widget(id, name, manufacturer, type);
+        Widget product = new Widget(id, name, manufacturer, item);
         // Adding those objects to the array list
         products.add(product);
       }
+
+      // Getting the last index to create a new product with later
+      lastId = products.get(products.size() - 1).getId();
 
       // Adding items to the existingProducts table view
       existingProducts.setItems(FXCollections.observableArrayList(products));
@@ -212,5 +240,10 @@ public class Controller { // inspect code says can be package private, but won't
       p.next();
       p.previous();
     }
+  }
+
+  private void displayProductionLog() {
+    ProductionRecord pr = new ProductionRecord(0);
+    productionLogTextArea.appendText(pr.toString());
   }
 }

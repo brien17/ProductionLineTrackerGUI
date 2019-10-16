@@ -5,7 +5,7 @@ This is the main file for my java fx application. This file contains the methods
 application.
  */
 
-package sample;
+package brien17;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -27,7 +27,7 @@ public class Main extends Application {
    */
   @Override
   public void start(Stage primaryStage) throws Exception {
-    Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+    Parent root = FXMLLoader.load(getClass().getResource("ProductionTabs.fxml"));
     primaryStage.setTitle("Production Records");
     primaryStage.setScene(new Scene(root, 680, 700));
     primaryStage.show();
