@@ -1,4 +1,4 @@
-package brien17;
+package brien;
 
 public class MoviePlayer extends Product implements MultimediaControl {
   // fields
@@ -12,6 +12,22 @@ public class MoviePlayer extends Product implements MultimediaControl {
     super(name, manufacturer, ItemType.valueOf("Visual"));
 
     this.monitorType = monitorType;
+    this.screen = screen;
+  }
+
+  public MonitorType getMonitorType() {
+    return monitorType;
+  }
+
+  public void setMonitorType(MonitorType monitorType) {
+    this.monitorType = monitorType;
+  }
+
+  public Screen getScreen() {
+    return screen;
+  }
+
+  public void setScreen(Screen screen) {
     this.screen = screen;
   }
 

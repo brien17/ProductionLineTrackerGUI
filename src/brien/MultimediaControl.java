@@ -1,6 +1,6 @@
-package brien17;
+package brien;
 
-public interface MultimediaControl {
+interface MultimediaControl {
   void play();
 
   void stop();

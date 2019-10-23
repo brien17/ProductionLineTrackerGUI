@@ -1,6 +1,6 @@
-package brien17;
+package brien;
 
-public interface Item {
+interface Item {
   int getId();
 
   void setName(String name);

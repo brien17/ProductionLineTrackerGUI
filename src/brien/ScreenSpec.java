@@ -1,6 +1,6 @@
-package brien17;
+package brien;
 
-public interface ScreenSpec {
+interface ScreenSpec {
   String getResolution();
 
   int getRefreshRate();

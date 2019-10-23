@@ -1,4 +1,4 @@
-package brien17;
+package brien;
 
 public enum MonitorType {
     LCD,

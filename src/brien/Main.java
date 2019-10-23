@@ -5,7 +5,7 @@ This is the main file for my java fx application. This file contains the methods
 application.
  */
 
-package brien17;
+package brien;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

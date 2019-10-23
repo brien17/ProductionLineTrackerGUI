@@ -1,4 +1,4 @@
-package brien17;
+package brien;
 
 public abstract class Product implements Item {
   // Fields
@@ -9,13 +9,13 @@ public abstract class Product implements Item {
 
   // Methods
 
-  public Product(String name, String manufacturer, ItemType type) {
+  Product(String name, String manufacturer, ItemType type) {
     this.name = name;
     this.manufacturer = manufacturer;
     this.type = type;
   }
 
-  public Product(int id, String name, String manufacturer, ItemType type) {
+  Product(int id, String name, String manufacturer, ItemType type) {
     this.id = id;
     this.name = name;
     this.manufacturer = manufacturer;

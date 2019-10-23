@@ -1,4 +1,4 @@
-package brien17;
+package brien;
 
 public class AudioPlayer extends Product implements MultimediaControl {
   // fields
@@ -12,6 +12,22 @@ public class AudioPlayer extends Product implements MultimediaControl {
       String name, String manufacturer, String audioSpecification, String mediaType) {
     super(name, manufacturer, ItemType.valueOf("Audio"));
     this.audioSpecification = audioSpecification;
+    this.mediaType = mediaType;
+  }
+
+  public String getAudioSpecification() {
+    return audioSpecification;
+  }
+
+  public void setAudioSpecification(String audioSpecification) {
+    this.audioSpecification = audioSpecification;
+  }
+
+  public String getMediaType() {
+    return mediaType;
+  }
+
+  public void setMediaType(String mediaType) {
     this.mediaType = mediaType;
   }
 

@@ -1,10 +1,11 @@
-/**
- * This is the controller file for my java fx application. This class handles all of the logic in my
- * JavaFX application
- *
- * @author Cameron Brien
+/*
+  This is the controller file for my java fx application. This class handles all of the logic in my
+  JavaFX application
+
+  @author Cameron Brien
  */
-package brien17;
+
+package brien;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,16 +13,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
-
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
@@ -54,7 +54,7 @@ public class Controller { // inspect code says can be package private, but won't
   @FXML private TableColumn<?, ?> epColType;
 
   private Connection conn;
-  private ArrayList<Product> products = new ArrayList<>();
+  private final ArrayList<Product> products = new ArrayList<>();
   private int lastId;
 
   // Methods

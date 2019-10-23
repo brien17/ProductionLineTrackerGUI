@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Cameron Brien -->
+<!-- Cameron brien -->
 <!-- 9/15/2019 -->
 <!-- This is the fxml file for my java fx application. This specifies how to elements of the application
 should appear. -->
@@ -22,7 +22,7 @@ should appear. -->
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane alignment="center" hgap="10" minHeight="700.0" minWidth="680.0" prefHeight="688.0" prefWidth="686.0" vgap="10" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="brien17.Controller">
+<GridPane alignment="center" hgap="10" minHeight="700.0" minWidth="680.0" prefHeight="688.0" prefWidth="686.0" vgap="10" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="brien.Controller">
     <columnConstraints>
         <ColumnConstraints />
     </columnConstraints>
