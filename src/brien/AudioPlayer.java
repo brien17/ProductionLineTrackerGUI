@@ -1,5 +1,11 @@
 package brien;
 
+/**
+ * AudioPlayer.java - This class is used to represent audio players that can be produced by the
+ * factory. This class is a Product and implements the MultimediaControl interface
+ *
+ * @author Cameron Brien
+ */
 public class AudioPlayer extends Product implements MultimediaControl {
   // fields
   private String audioSpecification;

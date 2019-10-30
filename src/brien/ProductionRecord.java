@@ -3,39 +3,40 @@ package brien;
 import java.util.Date;
 
 class ProductionRecord {
-  private int productionNumber;
+  private static int productionNumber;
   private int productId;
+  private String productName;
   private String serialNumber;
   private Date dateProduced;
 
   ProductionRecord(int productId) {
     this.productId = productId;
-    productionNumber = 0;
+    productionNumber++;
     serialNumber = "0";
     dateProduced = new Date();
   }
 
-  public ProductionRecord(
-      int productionNumber, int productId, String serialNumber, Date dateProduced) {
-    this.productionNumber = productionNumber;
+  public ProductionRecord(int productId, String serialNumber, Date dateProduced) {
+    productionNumber++;
     this.productId = productId;
     this.serialNumber = serialNumber;
     this.dateProduced = new Date(dateProduced.getTime());
   }
 
   public ProductionRecord(Product productProduced, int itemCount) {
-    productionNumber = 0;
+    productionNumber++;
     productId = productProduced.getId();
     serialNumber = generateSerialNum(productProduced, itemCount);
     dateProduced = new Date();
+    productName = productProduced.getName();
   }
 
   public int getProductionNumber() {
     return productionNumber;
   }
 
-  public void setProductionNumber(int productionNumber) {
-    this.productionNumber = productionNumber;
+  public void setProductionNumber(int newProductionNumber) {
+    productionNumber = newProductionNumber;
   }
 
   public int getProductId() {

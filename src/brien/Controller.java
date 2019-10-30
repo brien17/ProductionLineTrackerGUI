@@ -1,10 +1,3 @@
-/*
-  This is the controller file for my java fx application. This class handles all of the logic in my
-  JavaFX application
-
-  @author Cameron Brien
- */
-
 package brien;
 
 import java.sql.Connection;
@@ -25,6 +18,12 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+/**
+ * Controller.java - the controller class for my entire java fx program. This class manages
+ * interacions with the user interface, all other classes, and the database.
+ *
+ * @author Cameron Brien
+ */
 public class Controller { // inspect code says can be package private, but won't compile if it is
   // Fields
   @FXML private TextField productName;
@@ -37,7 +36,7 @@ public class Controller { // inspect code says can be package private, but won't
 
   @FXML private Button recordProductionButton;
 
-  @FXML private ListView<?> chooseProduct;
+  @FXML private ListView<String> chooseProduct;
 
   @FXML private ComboBox<String> chooseQuantity;
 
@@ -54,7 +53,9 @@ public class Controller { // inspect code says can be package private, but won't
   @FXML private TableColumn<?, ?> epColType;
 
   private Connection conn;
+
   private final ArrayList<Product> products = new ArrayList<>();
+
   private int lastId;
 
   // Methods
@@ -80,7 +81,7 @@ public class Controller { // inspect code says can be package private, but won't
     testMultimedia();
     connectToDatabase();
     populateProductLine();
-    displayProductionLog();
+    //displayProductionLog();
   }
 
   /**
@@ -107,6 +108,9 @@ public class Controller { // inspect code says can be package private, but won't
 
       // Displaying in table view
       existingProducts.getItems().add(product);
+
+      // Display in list view
+      chooseProduct.getItems().add(product.toString());
 
       // Making a statement and running it
       // Inspect code says possible null pointer here but is already in a try block
@@ -138,13 +142,22 @@ public class Controller { // inspect code says can be package private, but won't
     try {
       int numProduced = Integer.parseInt(quantity);
       System.out.println("Produced: " + numProduced);
+      int productIndex = chooseProduct.getSelectionModel().getSelectedIndex();
+      Widget productToProduce = (Widget)products.get(productIndex);
+      for (int i = 0; i < numProduced; i++) {
+        displayProductionLog(productToProduce, i);
+      }
+
     } catch (NumberFormatException ex) {
       System.out.println("Please enter only numbers");
+    } catch (Exception e) {
+      e.printStackTrace();
     }
   }
 
   /**
-   * This method connects to the database and saves that connection object as a field.
+   * This method connects to the database and saves that connection object as a field that can be
+   * used later.
    */
   private void connectToDatabase() {
     String dataBaseUrl =
@@ -157,12 +170,17 @@ public class Controller { // inspect code says can be package private, but won't
       Class.forName("org.h2.Driver");
 
       // Creating and returning connection object
-      conn = DriverManager.getConnection(dataBaseUrl, userName, pass);
+      conn = DriverManager.getConnection(dataBaseUrl, userName, pass); //findbugs doesn't like the empty password
     } catch (Exception e) {
       e.printStackTrace();
     }
   }
 
+  /**
+   * This method uses a database connection to get the products that are available for production
+   * and then writes those products to the existing products table view and the choose product list
+   * view.
+   */
   private void populateProductLine() {
     epColId.setCellValueFactory(new PropertyValueFactory<>("id"));
     epColName.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -213,6 +231,16 @@ public class Controller { // inspect code says can be package private, but won't
 
       // Adding items to the existingProducts table view
       existingProducts.setItems(FXCollections.observableArrayList(products));
+
+      // Creating an array list with the contents of the toString method for all available products
+      ArrayList<String> productToStrings = new ArrayList<>();
+      for (Product prod : products) {
+        productToStrings.add(prod.toString());
+      }
+
+      // Adding that array list to the choose product list view
+      chooseProduct.setItems(FXCollections.observableArrayList(productToStrings));
+
       // Closing statement
       stmt.close();
     } catch (NullPointerException npe) {
@@ -223,6 +251,10 @@ public class Controller { // inspect code says can be package private, but won't
     }
   }
 
+  /**
+   * This is a test class to demonstrate that the AudioPlayer and MoviePlayer classes are working
+   * properly.
+   */
   private static void testMultimedia() {
     AudioPlayer newAudioProduct =
         new AudioPlayer(
@@ -242,8 +274,9 @@ public class Controller { // inspect code says can be package private, but won't
     }
   }
 
-  private void displayProductionLog() {
-    ProductionRecord pr = new ProductionRecord(0);
-    productionLogTextArea.appendText(pr.toString());
+  /** This method displays the production log to the production log text area. */
+  private void displayProductionLog(Product product, int itemCount) {
+    ProductionRecord pr = new ProductionRecord(product, itemCount);
+    productionLogTextArea.appendText(pr.toString() + "\n");
   }
 }

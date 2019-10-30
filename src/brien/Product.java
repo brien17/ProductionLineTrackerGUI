@@ -27,6 +27,7 @@ public abstract class Product implements Item {
    *
    * @return The id field
    */
+  @Override
   public int getId() {
     return id;
   }
@@ -36,6 +37,7 @@ public abstract class Product implements Item {
    *
    * @param name The value to set the name field to
    */
+  @Override
   public void setName(String name) {
     this.name = name;
   }
@@ -45,6 +47,7 @@ public abstract class Product implements Item {
    *
    * @return The name field
    */
+  @Override
   public String getName() {
     return name;
   }
@@ -54,6 +57,7 @@ public abstract class Product implements Item {
    *
    * @param manufacturer The value to set the manufacturer field to
    */
+  @Override
   public void setManufacturer(String manufacturer) {
     this.manufacturer = manufacturer;
   }
@@ -63,6 +67,7 @@ public abstract class Product implements Item {
    *
    * @return The name field
    */
+  @Override
   public String getManufacturer() {
     return manufacturer;
   }
