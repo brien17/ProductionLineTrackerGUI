@@ -54,7 +54,8 @@ public class Controller { // inspect code says can be package private, but won't
 
   private Connection conn;
 
-  private final ArrayList<Product> products = new ArrayList<>();
+  // Creating an ArrayList to hold products
+  final ArrayList<Product> productLine = new ArrayList<>();
 
   private int lastId;
 
@@ -70,7 +71,6 @@ public class Controller { // inspect code says can be package private, but won't
     for (ItemType it : ItemType.values()) {
       productType.getItems().add(it);
     }
-
     // Adding numbers to the quantity selector
     for (int i = 1; i < 11; i++) {
       String number = "" + i;
@@ -78,10 +78,12 @@ public class Controller { // inspect code says can be package private, but won't
     }
     chooseQuantity.getSelectionModel().selectFirst();
     chooseQuantity.setEditable(true);
+
     testMultimedia();
     connectToDatabase();
-    populateProductLine();
-    //displayProductionLog();
+    setupProductLineTable();
+    // displayProductionLog();
+
   }
 
   /**
@@ -104,7 +106,7 @@ public class Controller { // inspect code says can be package private, but won't
       Widget product = new Widget(lastId, name, manufacturer, item);
 
       // Adding to products array list
-      products.add(product);
+      productLine.add(product);
 
       // Displaying in table view
       existingProducts.getItems().add(product);
@@ -143,7 +145,7 @@ public class Controller { // inspect code says can be package private, but won't
       int numProduced = Integer.parseInt(quantity);
       System.out.println("Produced: " + numProduced);
       int productIndex = chooseProduct.getSelectionModel().getSelectedIndex();
-      Widget productToProduce = (Widget)products.get(productIndex);
+      Widget productToProduce = (Widget) productLine.get(productIndex);
       for (int i = 0; i < numProduced; i++) {
         displayProductionLog(productToProduce, i);
       }
@@ -170,7 +172,9 @@ public class Controller { // inspect code says can be package private, but won't
       Class.forName("org.h2.Driver");
 
       // Creating and returning connection object
-      conn = DriverManager.getConnection(dataBaseUrl, userName, pass); //findbugs doesn't like the empty password
+      conn =
+          DriverManager.getConnection(
+              dataBaseUrl, userName, pass); // findbugs doesn't like the empty password
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -181,7 +185,7 @@ public class Controller { // inspect code says can be package private, but won't
    * and then writes those products to the existing products table view and the choose product list
    * view.
    */
-  private void populateProductLine() {
+  private void setupProductLineTable() {
     epColId.setCellValueFactory(new PropertyValueFactory<>("id"));
     epColName.setCellValueFactory(new PropertyValueFactory<>("name"));
     epColMan.setCellValueFactory(new PropertyValueFactory<>("manufacturer"));
@@ -223,18 +227,18 @@ public class Controller { // inspect code says can be package private, but won't
         // Creating product objects from the database information
         Widget product = new Widget(id, name, manufacturer, item);
         // Adding those objects to the array list
-        products.add(product);
+        productLine.add(product);
       }
 
       // Getting the last index to create a new product with later
-      lastId = products.get(products.size() - 1).getId();
+      lastId = productLine.get(productLine.size() - 1).getId();
 
       // Adding items to the existingProducts table view
-      existingProducts.setItems(FXCollections.observableArrayList(products));
+      existingProducts.setItems(FXCollections.observableArrayList(productLine));
 
       // Creating an array list with the contents of the toString method for all available products
       ArrayList<String> productToStrings = new ArrayList<>();
-      for (Product prod : products) {
+      for (Product prod : productLine) {
         productToStrings.add(prod.toString());
       }
 
@@ -262,9 +266,12 @@ public class Controller { // inspect code says can be package private, but won't
     Screen newScreen = new Screen("720x480", 40, 22);
     MoviePlayer newMovieProduct =
         new MoviePlayer("DBPOWER MK101", "OracleProduction", newScreen, MonitorType.LCD);
+    MoviePlayer newerMovieProduct =
+        new MoviePlayer("DBPOWER MK101", "OracleProduction", newScreen, MonitorType.LED);
     ArrayList<MultimediaControl> productList = new ArrayList<>();
     productList.add(newAudioProduct);
     productList.add(newMovieProduct);
+    productList.add(newerMovieProduct);
     for (MultimediaControl p : productList) {
       System.out.println(p);
       p.play();

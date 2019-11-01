@@ -22,7 +22,7 @@ public class Main extends Application {
   /**
    * This method is the starting point for my Java FX program.
    *
-   * @param primaryStage the first thing the user sees
+   * @param primaryStage the stage for the scenes to take place on
    * @throws Exception potential exception
    */
   @Override
