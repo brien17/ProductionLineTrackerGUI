@@ -1,12 +1,9 @@
 package brien;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -57,7 +54,15 @@ public class Controller { // inspect code says can be package private, but won't
   // Creating an ArrayList to hold products
   final ArrayList<Product> productLine = new ArrayList<>();
 
+  // Creating an ArrayList to hold production records
+  final ArrayList<ProductionRecord> productionRecords = new ArrayList<>();
+
+  // Creating ObservableArrayLists to hold the values for the table and list view
+  final ObservableList<Product> observableProductLine = FXCollections.observableArrayList();
+  final ObservableList<String> observableProductStrings = FXCollections.observableArrayList();
+
   private int lastId;
+  private int currentProductionNumber;
 
   // Methods
   /**
@@ -71,17 +76,34 @@ public class Controller { // inspect code says can be package private, but won't
     for (ItemType it : ItemType.values()) {
       productType.getItems().add(it);
     }
+
     // Adding numbers to the quantity selector
     for (int i = 1; i < 11; i++) {
       String number = "" + i;
       chooseQuantity.getItems().add(number);
     }
+
+    // Selecting the first item
     chooseQuantity.getSelectionModel().selectFirst();
+
+    // Making it editable
     chooseQuantity.setEditable(true);
 
+    // Demonstrating multimedia class functionality
     testMultimedia();
+
+    // Connecting to database
     connectToDatabase();
+
+    // Load product line
+    loadProductLine();
+
+    // Load production records
+    loadProductionLog();
+
+    // Setting up the product line table
     setupProductLineTable();
+
     // displayProductionLog();
 
   }
@@ -182,15 +204,10 @@ public class Controller { // inspect code says can be package private, but won't
 
   /**
    * This method uses a database connection to get the products that are available for production
-   * and then writes those products to the existing products table view and the choose product list
-   * view.
+   * and then adds those products to the observableProductLine ObservableArrayList and the contents
+   * of their toString() method to the observableProductStrings ObservableArrayList.
    */
-  private void setupProductLineTable() {
-    epColId.setCellValueFactory(new PropertyValueFactory<>("id"));
-    epColName.setCellValueFactory(new PropertyValueFactory<>("name"));
-    epColMan.setCellValueFactory(new PropertyValueFactory<>("manufacturer"));
-    epColType.setCellValueFactory(new PropertyValueFactory<>("type"));
-
+  private void loadProductLine() {
     try {
       // Making a statement
       // Inspect code says possible null pointer here but is already in a try block
@@ -202,12 +219,12 @@ public class Controller { // inspect code says can be package private, but won't
       // Looping through results
       while (rs.next()) {
         // Storing data into variables
-        int id = Integer.parseInt(rs.getString(1));
+        int id = rs.getInt(1);
         String name = rs.getString(2);
         String type = rs.getString(3);
         String manufacturer = rs.getString(4);
         // Getting the proper item type from the code
-        ItemType item;
+        ItemType item = ItemType.valueOf("VM");
         switch (type) {
           case "AM":
             item = ItemType.AudioMobile;
@@ -226,24 +243,14 @@ public class Controller { // inspect code says can be package private, but won't
         }
         // Creating product objects from the database information
         Widget product = new Widget(id, name, manufacturer, item);
-        // Adding those objects to the array list
+        // Adding those objects to the array list and observableLists
         productLine.add(product);
+        observableProductLine.add(product);
+        observableProductStrings.add(product.toString());
       }
 
       // Getting the last index to create a new product with later
       lastId = productLine.get(productLine.size() - 1).getId();
-
-      // Adding items to the existingProducts table view
-      existingProducts.setItems(FXCollections.observableArrayList(productLine));
-
-      // Creating an array list with the contents of the toString method for all available products
-      ArrayList<String> productToStrings = new ArrayList<>();
-      for (Product prod : productLine) {
-        productToStrings.add(prod.toString());
-      }
-
-      // Adding that array list to the choose product list view
-      chooseProduct.setItems(FXCollections.observableArrayList(productToStrings));
 
       // Closing statement
       stmt.close();
@@ -253,6 +260,68 @@ public class Controller { // inspect code says can be package private, but won't
     } catch (Exception e) {
       e.printStackTrace();
     }
+  }
+
+  /**
+   * This method uses a database connection to get information from the production record and
+   * creates ProductionRecord objects from that information. It them stores them in the
+   * productionRecord ArrayList.
+   */
+  private void loadProductionLog() {
+    try {
+      // Making a statement
+      // Inspect code says possible null pointer here but is already in a try block
+      Statement stmt = conn.createStatement();
+
+      // Executing query and collecting results
+      ResultSet rs = stmt.executeQuery("SELECT * FROM PRODUCTIONRECORD");
+
+      // Looping through results
+      while (rs.next()) {
+        // Storing data into variables
+        int productNum = rs.getInt(1);
+        int productId = rs.getInt(2);
+        String serialNum = rs.getString(3);
+        Timestamp dateProduced = rs.getTimestamp(4);
+
+        // Creating a product from the database values
+        ProductionRecord productionRecord = new ProductionRecord(productNum, productId, serialNum, dateProduced);
+
+        // Adding to the ArrayList
+        productionRecords.add(productionRecord);
+      }
+
+      // Closing statement
+      stmt.close();
+    } catch (NullPointerException npe) {
+      System.out.println("Null Pointer");
+
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  /**
+   * This method sets up the existingProducts table and the chooseProduct list and associates them
+   * with observable array lists containing the values that they need.
+   */
+  private void setupProductLineTable() {
+    epColId.setCellValueFactory(new PropertyValueFactory<>("id"));
+    epColName.setCellValueFactory(new PropertyValueFactory<>("name"));
+    epColMan.setCellValueFactory(new PropertyValueFactory<>("manufacturer"));
+    epColType.setCellValueFactory(new PropertyValueFactory<>("type"));
+
+    // Adding items to the existingProducts table view
+    existingProducts.setItems(observableProductLine);
+
+    // Adding that array list to the choose product list view
+    chooseProduct.setItems(observableProductStrings);
+  }
+
+  /** This method displays the production log to the production log text area. */
+  private void displayProductionLog(Product product, int itemCount) {
+    ProductionRecord pr = new ProductionRecord(product, itemCount);
+    productionLogTextArea.appendText(pr.toString() + "\n");
   }
 
   /**
@@ -279,11 +348,5 @@ public class Controller { // inspect code says can be package private, but won't
       p.next();
       p.previous();
     }
-  }
-
-  /** This method displays the production log to the production log text area. */
-  private void displayProductionLog(Product product, int itemCount) {
-    ProductionRecord pr = new ProductionRecord(product, itemCount);
-    productionLogTextArea.appendText(pr.toString() + "\n");
   }
 }
