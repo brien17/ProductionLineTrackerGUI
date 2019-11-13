@@ -55,6 +55,7 @@ class ProductionRecord {
     productId = productProduced.getId();
     serialNumber = generateSerialNum(productProduced, itemCount);
     dateProduced = new Date();
+    productionNumber = itemCount;
   }
 
   /**

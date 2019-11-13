@@ -1,7 +1,10 @@
 package brien;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -95,17 +98,14 @@ public class Controller { // inspect code says can be package private, but won't
     // Connecting to database
     connectToDatabase();
 
+    // Setting up the product line table
+    setupProductLineTable();
+
     // Load product line
     loadProductLine();
 
     // Load production records
     loadProductionLog();
-
-    // Setting up the product line table
-    setupProductLineTable();
-
-    // displayProductionLog();
-
   }
 
   /**
@@ -131,10 +131,10 @@ public class Controller { // inspect code says can be package private, but won't
       productLine.add(product);
 
       // Displaying in table view
-      existingProducts.getItems().add(product);
+      observableProductLine.add(product);
 
       // Display in list view
-      chooseProduct.getItems().add(product.toString());
+      observableProductStrings.add(product.toString());
 
       // Making a statement and running it
       // Inspect code says possible null pointer here but is already in a try block
@@ -168,9 +168,15 @@ public class Controller { // inspect code says can be package private, but won't
       System.out.println("Produced: " + numProduced);
       int productIndex = chooseProduct.getSelectionModel().getSelectedIndex();
       Widget productToProduce = (Widget) productLine.get(productIndex);
+      ArrayList<ProductionRecord> productionRun = new ArrayList<>();
       for (int i = 0; i < numProduced; i++) {
-        displayProductionLog(productToProduce, i);
+        productionRun.add(new ProductionRecord(productToProduce, currentProductionNumber++));
       }
+      // Displaying the results
+      showProduction(productionRun);
+
+      // Adding to database
+      addToProductionDB(productionRun);
 
     } catch (NumberFormatException ex) {
       System.out.println("Please enter only numbers");
@@ -184,9 +190,7 @@ public class Controller { // inspect code says can be package private, but won't
    * used later.
    */
   private void connectToDatabase() {
-    String dataBaseUrl =
-        "jdbc:h2:C:/Users/cam12/OneDrive - Florida Gulf Coast University/OOP/"
-            + "ProductionLineTrackerGUI/res";
+    String dataBaseUrl = "jdbc:h2:C:/Users/Cam/Java/ProductionLineTrackerGUI/res/res";
     String userName = "";
     String pass = "";
     try {
@@ -224,7 +228,7 @@ public class Controller { // inspect code says can be package private, but won't
         String type = rs.getString(3);
         String manufacturer = rs.getString(4);
         // Getting the proper item type from the code
-        ItemType item = ItemType.valueOf("VM");
+        ItemType item;
         switch (type) {
           case "AM":
             item = ItemType.AudioMobile;
@@ -276,8 +280,12 @@ public class Controller { // inspect code says can be package private, but won't
       // Executing query and collecting results
       ResultSet rs = stmt.executeQuery("SELECT * FROM PRODUCTIONRECORD");
 
+      // Reseting the currentProductionNumber
+      currentProductionNumber = 0;
       // Looping through results
       while (rs.next()) {
+        // Adding 1 to current production number
+        currentProductionNumber++;
         // Storing data into variables
         int productNum = rs.getInt(1);
         int productId = rs.getInt(2);
@@ -285,19 +293,47 @@ public class Controller { // inspect code says can be package private, but won't
         Timestamp dateProduced = rs.getTimestamp(4);
 
         // Creating a product from the database values
-        ProductionRecord productionRecord = new ProductionRecord(productNum, productId, serialNum, dateProduced);
+        ProductionRecord productionRecord =
+            new ProductionRecord(productNum, productId, serialNum, dateProduced);
 
         // Adding to the ArrayList
         productionRecords.add(productionRecord);
       }
 
+      // Displaying to the text area
+      showProduction(productionRecords);
+
       // Closing statement
       stmt.close();
+
     } catch (NullPointerException npe) {
       System.out.println("Null Pointer");
 
     } catch (Exception e) {
       e.printStackTrace();
+    }
+  }
+
+  private void addToProductionDB(ArrayList<ProductionRecord> productionRun) {
+    try {
+
+      for (ProductionRecord record : productionRun) {
+        // Making a statement and running it
+        PreparedStatement pstmt =
+            conn.prepareStatement(
+                "INSERT INTO PRODUCTIONRECORD (PRODUCT_ID, SERIAL_NUM, DATE_PRODUCED) VALUES (?,?,?)");
+
+        pstmt.setInt(1, record.getProductId());
+        pstmt.setString(2, record.getSerialNumber());
+        pstmt.setTimestamp(3, new Timestamp(record.getDateProduced().getTime()));
+        pstmt.execute();
+        pstmt.close();
+      }
+    } catch (NullPointerException npe) {
+      System.out.println("Please complete all fields");
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.out.println("ERROR");
     }
   }
 
@@ -319,9 +355,10 @@ public class Controller { // inspect code says can be package private, but won't
   }
 
   /** This method displays the production log to the production log text area. */
-  private void displayProductionLog(Product product, int itemCount) {
-    ProductionRecord pr = new ProductionRecord(product, itemCount);
-    productionLogTextArea.appendText(pr.toString() + "\n");
+  private void showProduction(ArrayList<ProductionRecord> productionRun) {
+    for (ProductionRecord record : productionRun) {
+      productionLogTextArea.appendText(record.toString() + "\n");
+    }
   }
 
   /**
