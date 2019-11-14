@@ -1,10 +1,15 @@
 package brien;
 
-import java.sql.*;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
+import java.io.FileInputStream;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.Statement;
+import java.sql.ResultSet;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Properties;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -55,14 +60,14 @@ public class Controller { // inspect code says can be package private, but won't
   private Connection conn;
 
   // Creating an ArrayList to hold products
-  final ArrayList<Product> productLine = new ArrayList<>();
+  private final ArrayList<Product> productLine = new ArrayList<>();
 
   // Creating an ArrayList to hold production records
-  final ArrayList<ProductionRecord> productionRecords = new ArrayList<>();
+  private final ArrayList<ProductionRecord> productionRecords = new ArrayList<>();
 
   // Creating ObservableArrayLists to hold the values for the table and list view
-  final ObservableList<Product> observableProductLine = FXCollections.observableArrayList();
-  final ObservableList<String> observableProductStrings = FXCollections.observableArrayList();
+  private final ObservableList<Product> observableProductLine = FXCollections.observableArrayList();
+  private final ObservableList<String> observableProductStrings = FXCollections.observableArrayList();
 
   private int lastId;
   private int currentProductionNumber;
@@ -190,10 +195,16 @@ public class Controller { // inspect code says can be package private, but won't
    * used later.
    */
   private void connectToDatabase() {
-    String dataBaseUrl = "jdbc:h2:C:/Users/Cam/Java/ProductionLineTrackerGUI/res/res";
+    String dataBaseUrl =
+        "jdbc:h2:C:/Users/cam12/OneDrive - Florida Gulf Coast University/OOP/"
+            + "ProductionLineTrackerGUI/res/res";
     String userName = "";
-    String pass = "";
     try {
+      // Getting the password from file
+      Properties prop = new Properties();
+      prop.load(new FileInputStream("res/properties"));
+      String pass = prop.getProperty("password");
+
       // Registering the driver
       Class.forName("org.h2.Driver");
 
@@ -321,7 +332,8 @@ public class Controller { // inspect code says can be package private, but won't
         // Making a statement and running it
         PreparedStatement pstmt =
             conn.prepareStatement(
-                "INSERT INTO PRODUCTIONRECORD (PRODUCT_ID, SERIAL_NUM, DATE_PRODUCED) VALUES (?,?,?)");
+                "INSERT INTO PRODUCTIONRECORD (PRODUCT_ID, SERIAL_NUM, DATE_PRODUCED)"
+                    + "VALUES (?,?,?)");
 
         pstmt.setInt(1, record.getProductId());
         pstmt.setString(2, record.getSerialNumber());
