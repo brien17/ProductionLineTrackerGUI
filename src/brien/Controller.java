@@ -221,8 +221,7 @@ public class Controller { // inspect code says can be package private, but won't
    */
   private void connectToDatabase() {
     String dataBaseUrl =
-        "jdbc:h2:C:/Users/cam12/OneDrive - Florida Gulf Coast University/OOP/"
-            + "ProductionLineTrackerGUI/res/res";
+        "jdbc:h2:./res/res";
     String userName = "";
     try {
       // Getting the reversed password from file
