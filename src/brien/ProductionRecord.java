@@ -36,14 +36,15 @@ class ProductionRecord {
    * @param productId The unique identification code for the product
    * @param serialNumber The serial number of the product
    * @param dateProduced The date the product was produced
+   * @param creator The employee who produced the product
    */
   ProductionRecord(
-      int productionNumber, int productId, String serialNumber, Date dateProduced) {
+      int productionNumber, int productId, String serialNumber, Date dateProduced, String creator) {
     this.productionNumber = productionNumber;
     this.productId = productId;
     this.serialNumber = serialNumber;
     this.dateProduced = new Date(dateProduced.getTime());
-    this.creator = "Default";
+    this.creator = creator;
   }
 
   /**

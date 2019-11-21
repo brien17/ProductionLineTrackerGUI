@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Properties;
+import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -22,6 +23,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Duration;
 
 /**
  * Controller.java - the controller class for my entire java fx program. This class manages
@@ -53,7 +55,7 @@ public class Controller { // inspect code says can be package private, but won't
 
   @FXML private TableColumn<?, ?> epColType;
 
-  @FXML private Label chooseQuantityErrorLabel;
+  @FXML private Label chooseQuantityLabel;
 
   @FXML private TextField fullNameTextField;
 
@@ -103,10 +105,6 @@ public class Controller { // inspect code says can be package private, but won't
     // Making it editable
     chooseQuantity.setEditable(true);
 
-    // Selecting the first item
-    chooseProduct.getSelectionModel().selectFirst();
-    chooseQuantity.getSelectionModel().selectFirst();
-
     // Demonstrating multimedia class functionality
     testMultimedia();
 
@@ -121,6 +119,10 @@ public class Controller { // inspect code says can be package private, but won't
 
     // Load production records
     loadProductionLog();
+
+    // Selecting the first item
+    chooseProduct.getSelectionModel().selectFirst();
+    chooseQuantity.getSelectionModel().selectFirst();
   }
 
   /**
@@ -186,7 +188,8 @@ public class Controller { // inspect code says can be package private, but won't
       ArrayList<ProductionRecord> productionRun = new ArrayList<>();
       for (int i = 0; i < numProduced; i++) {
         productionRun.add(
-            new ProductionRecord(productToProduce, currentProductionNumber++, currentEmployee.getUsername()));
+            new ProductionRecord(
+                productToProduce, currentProductionNumber++, currentEmployee.getUsername()));
       }
       // Displaying the results
       showProduction(productionRun);
@@ -194,9 +197,29 @@ public class Controller { // inspect code says can be package private, but won't
       // Adding to database
       addToProductionDB(productionRun);
 
+      // Display message to user
+      chooseQuantityLabel.setText("Production Recorded");
+      chooseQuantityLabel.setStyle("-fx-text-fill: black");
+      chooseQuantityLabel.setVisible(true);
+
+      // Hiding label
+      PauseTransition visiblePause = new PauseTransition(Duration.seconds(3));
+      visiblePause.setOnFinished(event -> chooseQuantityLabel.setVisible(false));
+      visiblePause.play();
+
     } catch (NumberFormatException ex) {
       System.out.println("Please enter only numbers");
-      chooseQuantityErrorLabel.setText("Please enter only whole numbers");
+
+      // Displaying error label
+      chooseQuantityLabel.setStyle("-fx-text-fill: firebrick");
+      chooseQuantityLabel.setText("Please enter only whole numbers");
+      chooseQuantityLabel.setVisible(true);
+
+      // Hiding label
+      PauseTransition visiblePause = new PauseTransition(Duration.seconds(3));
+      visiblePause.setOnFinished(event -> chooseQuantityLabel.setVisible(false));
+      visiblePause.play();
+
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -328,10 +351,11 @@ public class Controller { // inspect code says can be package private, but won't
         int productId = rs.getInt(2);
         String serialNum = rs.getString(3);
         Timestamp dateProduced = rs.getTimestamp(4);
+        String creator = rs.getString(5);
 
         // Creating a product from the database values
         ProductionRecord productionRecord =
-            new ProductionRecord(productNum, productId, serialNum, dateProduced);
+            new ProductionRecord(productNum, productId, serialNum, dateProduced, creator);
 
         // Adding to the ArrayList
         productionRecords.add(productionRecord);

@@ -7,6 +7,10 @@ This is the css file that styles the content stored in he ProductionTabs.fxml fi
     -fx-font-weight: bold;
 }
 
+.errorLabel {
+    -fx-text-fill: firebrick;
+}
+
 #button:hover {
     -fx-background-color: linear-gradient(#0474bf, #0098ff);
 }
