@@ -1,3 +1,37 @@
+## Production Line Tracker GUI
+This is a project that I did for my Object Oriented Programming class. The goal of this project was to create software 
+that could be used by a fictional production facility that makes media players. This product was designed to have a 
+graphical user interface that would allow the user to track the production of products, add new products to be produced,
+create an employee account, and view the products that have been produced already. The information about the products is
+stored in a database so that it can be saved between uses. This project was completed during my Junior year as an FGCU 
+student studying software engineering. This software was made utilizing the object oriented style to learn the concepts
+of Object-oriented programming. Some parts of this project are not integrated into the GUI and are only to demonstrate 
+Object-oriented programming concepts. 
+
+## Demonstration
+
+This animation shows some of the features of my program in action. 
+<H1>Put link to gif here</H1>
+
+## Documentation
+This program was documented using javadoc style comments.
+Documentation can be seen at: <br>
+<H1>Put a link here</H1>
+
+## Getting started
+
+
+## Built with
+* Java
+* IntelliJ
+* Hard Work
+
+## Contributing 
+
+I am not seeking any contributions to this project, but you are free to download it and use or modify it as you wish.
+
+## Acknowledgements
+
 ## Problem Statement
 
 **Scenario**
