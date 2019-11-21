@@ -14,7 +14,7 @@ public class MoviePlayer extends Product implements MultimediaControl {
   // methods
 
   /**
-   * This is a constructor for the MoviePlayer class. This constructor accepts arguements for the
+   * This is a constructor for the MoviePlayer class. This constructor accepts arguments for the
    * name, manufacturer, screen, and monitorType fields.
    *
    * @param name The name of the MoviePlayer
@@ -22,7 +22,7 @@ public class MoviePlayer extends Product implements MultimediaControl {
    * @param screen A screen class with details on the screen the MoviePlayer has
    * @param monitorType The type of screen that the MoviePlayer has
    */
-  public MoviePlayer(String name, String manufacturer, Screen screen, MonitorType monitorType) {
+  MoviePlayer(String name, String manufacturer, Screen screen, MonitorType monitorType) {
     super(name, manufacturer, ItemType.valueOf("Visual"));
     this.monitorType = monitorType;
     this.screen = screen;

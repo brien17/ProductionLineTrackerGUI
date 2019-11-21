@@ -1,22 +1,22 @@
 package brien;
 
 import java.io.FileInputStream;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.Statement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Properties;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -25,7 +25,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
  * Controller.java - the controller class for my entire java fx program. This class manages
- * interacions with the user interface, all other classes, and the database.
+ * interactions with the user interface, all other classes, and the database.
  *
  * @author Cameron Brien
  */
@@ -36,10 +36,6 @@ public class Controller { // inspect code says can be package private, but won't
   @FXML private TextField productManufacturer;
 
   @FXML private ChoiceBox<ItemType> productType;
-
-  @FXML private Button productionLineButton;
-
-  @FXML private Button recordProductionButton;
 
   @FXML private ListView<String> chooseProduct;
 
@@ -57,6 +53,13 @@ public class Controller { // inspect code says can be package private, but won't
 
   @FXML private TableColumn<?, ?> epColType;
 
+  @FXML private Label chooseQuantityErrorLabel;
+
+  @FXML private TextField fullNameTextField;
+
+  @FXML private PasswordField passwordField;
+
+  // Declaring the connection object so it can be shared throughout the program
   private Connection conn;
 
   // Creating an ArrayList to hold products
@@ -67,10 +70,15 @@ public class Controller { // inspect code says can be package private, but won't
 
   // Creating ObservableArrayLists to hold the values for the table and list view
   private final ObservableList<Product> observableProductLine = FXCollections.observableArrayList();
-  private final ObservableList<String> observableProductStrings = FXCollections.observableArrayList();
+  private final ObservableList<String> observableProductStrings =
+      FXCollections.observableArrayList();
 
+  // Keeping track of the production number and product id's
   private int lastId;
   private int currentProductionNumber;
+
+  // Creating the current user
+  private Employee currentEmployee = new Employee("", "");
 
   // Methods
   /**
@@ -80,6 +88,7 @@ public class Controller { // inspect code says can be package private, but won't
    */
   @FXML
   public void initialize() {
+    System.out.println(currentEmployee.toString());
     // Adding values to they type choice box
     for (ItemType it : ItemType.values()) {
       productType.getItems().add(it);
@@ -91,11 +100,12 @@ public class Controller { // inspect code says can be package private, but won't
       chooseQuantity.getItems().add(number);
     }
 
-    // Selecting the first item
-    chooseQuantity.getSelectionModel().selectFirst();
-
     // Making it editable
     chooseQuantity.setEditable(true);
+
+    // Selecting the first item
+    chooseProduct.getSelectionModel().selectFirst();
+    chooseQuantity.getSelectionModel().selectFirst();
 
     // Demonstrating multimedia class functionality
     testMultimedia();
@@ -161,8 +171,8 @@ public class Controller { // inspect code says can be package private, but won't
   }
 
   /**
-   * This method runs when the record production button is clicked and prints the number of items
-   * that were produced to the console.
+   * This method runs when the record production button is clicked. It adds the results of the
+   * production to the database and displays the results on the production log screen.
    */
   @FXML
   public void recordProductionButtonAction() {
@@ -175,7 +185,8 @@ public class Controller { // inspect code says can be package private, but won't
       Widget productToProduce = (Widget) productLine.get(productIndex);
       ArrayList<ProductionRecord> productionRun = new ArrayList<>();
       for (int i = 0; i < numProduced; i++) {
-        productionRun.add(new ProductionRecord(productToProduce, currentProductionNumber++));
+        productionRun.add(
+            new ProductionRecord(productToProduce, currentProductionNumber++, currentEmployee.getUsername()));
       }
       // Displaying the results
       showProduction(productionRun);
@@ -185,9 +196,23 @@ public class Controller { // inspect code says can be package private, but won't
 
     } catch (NumberFormatException ex) {
       System.out.println("Please enter only numbers");
+      chooseQuantityErrorLabel.setText("Please enter only whole numbers");
     } catch (Exception e) {
       e.printStackTrace();
     }
+  }
+
+  /**
+   * This method runs when the login button is clicked and sets the currentEmployee to be the
+   * Employee who is logging in.
+   */
+  public void loginButtonAction() {
+    // Getting the full name and password entered by the user
+    String fullName = fullNameTextField.getText();
+    String password = passwordField.getText();
+
+    // Setting currentEmployee as a new Employee created from the full name and password
+    currentEmployee = new Employee(fullName, password);
   }
 
   /**
@@ -200,10 +225,13 @@ public class Controller { // inspect code says can be package private, but won't
             + "ProductionLineTrackerGUI/res/res";
     String userName = "";
     try {
-      // Getting the password from file
+      // Getting the reversed password from file
       Properties prop = new Properties();
       prop.load(new FileInputStream("res/properties"));
-      String pass = prop.getProperty("password");
+      String reversedPass = prop.getProperty("password");
+
+      // Reversing the password to get the correct password
+      String pass = reversePassword(reversedPass);
 
       // Registering the driver
       Class.forName("org.h2.Driver");
@@ -291,8 +319,8 @@ public class Controller { // inspect code says can be package private, but won't
       // Executing query and collecting results
       ResultSet rs = stmt.executeQuery("SELECT * FROM PRODUCTIONRECORD");
 
-      // Reseting the currentProductionNumber
-      currentProductionNumber = 0;
+      // Resetting the currentProductionNumber
+      currentProductionNumber = 1;
       // Looping through results
       while (rs.next()) {
         // Adding 1 to current production number
@@ -325,6 +353,12 @@ public class Controller { // inspect code says can be package private, but won't
     }
   }
 
+  /**
+   * This method is used to add a list of production records to the production record database
+   * table.
+   *
+   * @param productionRun An ArrayList containing the ProductionRecords to be added to the database
+   */
   private void addToProductionDB(ArrayList<ProductionRecord> productionRun) {
     try {
 
@@ -396,6 +430,29 @@ public class Controller { // inspect code says can be package private, but won't
       p.stop();
       p.next();
       p.previous();
+    }
+  }
+
+  /**
+   * This method works recursively to reverse the password that is passed into it and returns the
+   * result.
+   *
+   * @param password The password that you want to reverse
+   * @return The reversed password
+   */
+  private String reversePassword(String password) {
+    // Getting last character of the string
+    String lastChar = password.substring(password.length() - 1);
+
+    // Checking if there is more than one character in the string
+    if (password.length() == 1) {
+      // Returning the only remaining character
+      return lastChar;
+    } else {
+      // Getting all but the last character of the string
+      String allButLast = password.substring(0, password.length() - 1);
+      // Returning the last character plus the result of this method called with allButLast
+      return lastChar + reversePassword(allButLast);
     }
   }
 }

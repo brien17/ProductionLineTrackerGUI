@@ -13,9 +13,10 @@ class ProductionRecord {
   private int productId;
   private String serialNumber;
   private Date dateProduced;
+  private String creator;
 
   /**
-   * This is a constructor for the ProductionRecord class. This constructor accepts an arguement for
+   * This is a constructor for the ProductionRecord class. This constructor accepts an argument for
    * the productId.
    *
    * @param productId The unique identification code for the product
@@ -28,7 +29,7 @@ class ProductionRecord {
   }
 
   /**
-   * This is a constructor for the ProductionRecord class. This constructor accepts arguements for
+   * This is a constructor for the ProductionRecord class. This constructor accepts arguments for
    * the productionNumber, productId, serialNumber, and dateProduced.
    *
    * @param productionNumber The number of total products that have been produced
@@ -36,12 +37,13 @@ class ProductionRecord {
    * @param serialNumber The serial number of the product
    * @param dateProduced The date the product was produced
    */
-  public ProductionRecord(
+  ProductionRecord(
       int productionNumber, int productId, String serialNumber, Date dateProduced) {
     this.productionNumber = productionNumber;
     this.productId = productId;
     this.serialNumber = serialNumber;
     this.dateProduced = new Date(dateProduced.getTime());
+    this.creator = "Default";
   }
 
   /**
@@ -50,12 +52,14 @@ class ProductionRecord {
    *
    * @param productProduced An object representing the product that was produced
    * @param itemCount The number of that product that have been produced
+   * @param creator The username of the employee who created the product that this record is for
    */
-  public ProductionRecord(Product productProduced, int itemCount) {
+  ProductionRecord(Product productProduced, int itemCount, String creator) {
     productId = productProduced.getId();
     serialNumber = generateSerialNum(productProduced, itemCount);
     dateProduced = new Date();
     productionNumber = itemCount;
+    this.creator = creator;
   }
 
   /**
@@ -81,7 +85,7 @@ class ProductionRecord {
    *
    * @return The productId field
    */
-  public int getProductId() {
+  int getProductId() {
     return productId;
   }
 
@@ -99,7 +103,7 @@ class ProductionRecord {
    *
    * @return The serialNumber field
    */
-  public String getSerialNumber() {
+  String getSerialNumber() {
     return serialNumber;
   }
 
@@ -117,7 +121,7 @@ class ProductionRecord {
    *
    * @return The dateProduced field
    */
-  public Date getDateProduced() {
+  Date getDateProduced() {
     return new Date(dateProduced.getTime());
   }
 
@@ -146,7 +150,9 @@ class ProductionRecord {
         + " Serial Num: "
         + serialNumber
         + " Date: "
-        + dateProduced;
+        + dateProduced
+        + " Username: "
+        + creator;
   }
 
   /**

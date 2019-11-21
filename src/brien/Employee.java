@@ -9,6 +9,13 @@ public class Employee {
   private String password;
   private String email;
 
+  /**
+   * This is the constructor for the Employee class, it takes in the full name of the user and a
+   * password that they enter.
+   *
+   * @param name The full name entered by the user
+   * @param password The password entered by the user
+   */
   Employee(String name, String password) {
     // Changing the String to a StringBuilder
     StringBuilder builderName = new StringBuilder(name);
@@ -37,6 +44,12 @@ public class Employee {
     }
   }
 
+  /**
+   * This method takes in the full name entered by the user and uses it to generate an email for
+   * that user.
+   *
+   * @param name The full name entered by the user
+   */
   private void setEmail(StringBuilder name) {
     // Setting up regex to get first and last names
     final String regex = "[a-zA-Z]+";
@@ -51,6 +64,12 @@ public class Employee {
     email = firstName.toLowerCase() + "." + lastName.toLowerCase() + "@oracleacademy.Test";
   }
 
+  /**
+   * This method takes in the StringBuilder that the user entered for their name and creates a
+   * username consisting of their first initial followed by their last name, all in lower case.
+   *
+   * @param name The full name the user entered
+   */
   private void setUsername(StringBuilder name) {
     // Setting up regex to get first and last names
     final String regex = "[a-zA-Z]+";
@@ -63,19 +82,21 @@ public class Employee {
     username = firstName.toLowerCase().charAt(0) + lastName.toLowerCase();
   }
 
+  /**
+   * This method checks that the password the user entered contains an uppercase character, a
+   * lowercase character, and a symbol.
+   *
+   * @param password The password the user entered
+   * @return Boolean representing if that password is acceptable or not
+   */
   private boolean isValidPassword(String password) {
     final String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]*$";
 
     final Pattern pattern = Pattern.compile(regex, Pattern.MULTILINE);
     final Matcher matcher = pattern.matcher(password);
 
-    // If the password has a lowercase letter, uppercase letter, and symbol return true else return
-    // false
-    if (matcher.find()) {
-      return true;
-    } else {
-      return false;
-    }
+    // If the password has a lowercase letter, uppercase letter, and symbol
+    return matcher.find();
   }
 
   /**
@@ -91,13 +112,14 @@ public class Employee {
     final Matcher matcher = pattern.matcher(name);
 
     // If there is a space return true else return false
-    if (matcher.find()) {
-      return true;
-    } else {
-      return false;
-    }
+    return matcher.find();
   }
 
+  /**
+   * This method generates a string that contains information about the Employee.
+   *
+   * @return A string containing information about the Employee
+   */
   public String toString() {
     return "Employee Details\nName : "
         + name
@@ -107,5 +129,14 @@ public class Employee {
         + email
         + "\nInitial Password : "
         + password;
+  }
+
+  /**
+   * This is a getter for the username field.
+   *
+   * @return The username
+   */
+  String getUsername() {
+    return username;
   }
 }

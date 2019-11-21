@@ -14,7 +14,7 @@ public class AudioPlayer extends Product implements MultimediaControl {
   // methods
 
   /**
-   * This is a constructor for the AudioPlayer class. This constructor accepts arguements for the
+   * This is a constructor for the AudioPlayer class. This constructor accepts arguments for the
    * name, manufacturer, SupportedAudioFormats and supportedPlaylistFormats fields.
    *
    * @param name The name of the AudioPlayer
@@ -22,7 +22,7 @@ public class AudioPlayer extends Product implements MultimediaControl {
    * @param supportedAudioFormats The audio specification for the AudioPlayer
    * @param supportedPlaylistFormats The media type it is able to play
    */
-  public AudioPlayer(
+  AudioPlayer(
       String name,
       String manufacturer,
       String supportedAudioFormats,
@@ -67,7 +67,7 @@ public class AudioPlayer extends Product implements MultimediaControl {
   /**
    * This method generates a string that contains information about the AudioPlayer.
    *
-   * @return a string containing information about the AudioPlayer
+   * @return A string containing information about the AudioPlayer
    */
   public String toString() {
     return super.toString()

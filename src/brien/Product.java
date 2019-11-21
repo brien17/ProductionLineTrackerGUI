@@ -2,7 +2,7 @@ package brien;
 
 /**
  * Product.java - This abstract class is used to define methods that will be used by classes that
- * inherit from it. It is desingned to have all of the basic information and functionality that all
+ * inherit from it. It is designed to have all of the basic information and functionality that all
  * products will need.
  *
  * @author Cameron Brien
@@ -17,7 +17,7 @@ public abstract class Product implements Item {
   // Methods
 
   /**
-   * This is a constructor for the Product class. This constructor takes in arguements for the name,
+   * This is a constructor for the Product class. This constructor takes in arguments for the name,
    * manufacturer, and type fields.
    *
    * @param name The name of the Product
@@ -31,7 +31,7 @@ public abstract class Product implements Item {
   }
 
   /**
-   * This is a constructor for the Product class. This constructor takes in arguements for the id,
+   * This is a constructor for the Product class. This constructor takes in arguments for the id,
    * name, manufacturer, and type fields.
    *
    * @param id The id code for the Product

@@ -9,7 +9,7 @@ package brien;
  */
 class Widget extends Product implements Item {
   /**
-   * This is a constructor for the Widget class. This constructor takes in arguements for the id,
+   * This is a constructor for the Widget class. This constructor takes in arguments for the id,
    * name, manufacturer, and type fields and passes them to the super class constructor.
    *
    * @param id The id code for the Product
