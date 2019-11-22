@@ -61,6 +61,16 @@ public class Controller { // inspect code says can be package private, but won't
 
   @FXML private PasswordField passwordField;
 
+  @FXML private Label employeeLabel;
+
+  @FXML private Label currentUserLabel;
+
+  @FXML private Label currentUserLabel1;
+
+  @FXML private Label currentUserLabel2;
+
+  @FXML private Label currentUserLabel3;
+
   // Declaring the connection object so it can be shared throughout the program
   private Connection conn;
 
@@ -69,6 +79,9 @@ public class Controller { // inspect code says can be package private, but won't
 
   // Creating an ArrayList to hold production records
   private final ArrayList<ProductionRecord> productionRecords = new ArrayList<>();
+
+  // Creating an ArrayList to hold all employees
+  private final ArrayList<Employee> employees = new ArrayList<>();
 
   // Creating ObservableArrayLists to hold the values for the table and list view
   private final ObservableList<Product> observableProductLine = FXCollections.observableArrayList();
@@ -90,7 +103,9 @@ public class Controller { // inspect code says can be package private, but won't
    */
   @FXML
   public void initialize() {
-    System.out.println(currentEmployee.toString());
+    // Displaying the current user
+    displayCurrentUser();
+
     // Adding values to they type choice box
     for (ItemType it : ItemType.values()) {
       productType.getItems().add(it);
@@ -114,11 +129,14 @@ public class Controller { // inspect code says can be package private, but won't
     // Setting up the product line table
     setupProductLineTable();
 
-    // Load product line
+    // Load product line from database
     loadProductLine();
 
-    // Load production records
+    // Load production records from database
     loadProductionLog();
+
+    // Loading the employees from database
+    loadEmployees();
 
     // Selecting the first item
     chooseProduct.getSelectionModel().selectFirst();
@@ -226,16 +244,109 @@ public class Controller { // inspect code says can be package private, but won't
   }
 
   /**
-   * This method runs when the login button is clicked and sets the currentEmployee to be the
-   * Employee who is logging in.
+   * This method runs when the login button is clicked and, if the account details entered by the
+   * user are valid, it sets the currentEmployee to be the Employee who is logging in. Otherwise it
+   * notifies the user that the entered credentials are not valid.
    */
   public void loginButtonAction() {
+    // Boolean to keep track of if the login was successful
+    boolean successfulLogin = false;
+
     // Getting the full name and password entered by the user
     String fullName = fullNameTextField.getText();
     String password = passwordField.getText();
 
-    // Setting currentEmployee as a new Employee created from the full name and password
-    currentEmployee = new Employee(fullName, password);
+    // Saving the results of the login attempt
+    Employee employeeToLogin = new Employee(fullName, password);
+    // Setting currentEmployee as a new Employee created if it matches an existing employee in the
+    // database
+    for (Employee employee : employees) {
+      System.out.println(employee.getUsername());
+      if (employee.getUsername().equals(employeeToLogin.getUsername())
+          && employee.getPassword().equals(employeeToLogin.getPassword())) {
+        // Setting the employee entered as the current employee
+        currentEmployee = employeeToLogin;
+        successfulLogin = true;
+        // Display message to user
+        employeeLabel.setText("Signed in as " + currentEmployee.getName());
+        employeeLabel.setStyle("-fx-text-fill: black");
+        employeeLabel.setVisible(true);
+        // Hiding label
+        PauseTransition visiblePause = new PauseTransition(Duration.seconds(3));
+        visiblePause.setOnFinished(event -> employeeLabel.setVisible(false));
+        visiblePause.play();
+        // Updating the labels
+        displayCurrentUser();
+        break;
+      }
+    }
+    if (!successfulLogin) {
+      // Display message to user
+      employeeLabel.setText("Incorrect name or password");
+      employeeLabel.setStyle("-fx-text-fill: firebrick");
+      employeeLabel.setVisible(true);
+      // Hiding label
+      PauseTransition visiblePause = new PauseTransition(Duration.seconds(3));
+      visiblePause.setOnFinished(event -> employeeLabel.setVisible(false));
+      visiblePause.play();
+    }
+  }
+
+  /**
+   * This method runs when the createAccountButton is clicked. If the information entered by the
+   * user is valid, it creates a new Employee object using the data that the user entered, sets the
+   * currentUser as the new Employee, and calls the addEmployeeToDatabase method with the new
+   * Employee. Otherwise it notifies the user of an error.
+   */
+  public void createAccountButtonAction() {
+    // Getting full name and password entered by the user
+    String fullName = fullNameTextField.getText();
+    String password = passwordField.getText();
+
+    // Creating a new Employee object
+    Employee newEmployee = new Employee(fullName, password);
+
+    // Checking if their username or password is rejected
+    if (newEmployee.getUsername().equals("default")) {
+      // Display message to user
+      employeeLabel.setText("Please enter your first and last name separated by a space");
+      employeeLabel.setStyle("-fx-text-fill: firebrick");
+      employeeLabel.setVisible(true);
+      // Hiding label
+      PauseTransition visiblePause = new PauseTransition(Duration.seconds(3));
+      visiblePause.setOnFinished(event -> employeeLabel.setVisible(false));
+      visiblePause.play();
+
+    } else if (newEmployee.getPassword().equals("pw")) {
+      // Display message to user
+      employeeLabel.setText(
+          "Please use an uppercase letter, lowercase letter, and special character in your password");
+      employeeLabel.setStyle("-fx-text-fill: firebrick");
+      employeeLabel.setVisible(true);
+      // Hiding label
+      PauseTransition visiblePause = new PauseTransition(Duration.seconds(3));
+      visiblePause.setOnFinished(event -> employeeLabel.setVisible(false));
+      visiblePause.play();
+
+    } else {
+      // Adding to the employees ArrayList
+      employees.add(newEmployee);
+      // Setting the newly created account as the current account
+      currentEmployee = newEmployee;
+      // Adding the account to the database
+      addEmployeeToDatabase(newEmployee);
+
+      // Display message to user
+      employeeLabel.setText("Account Created. Signed in as " + currentEmployee.getName());
+      employeeLabel.setStyle("-fx-text-fill: black");
+      employeeLabel.setVisible(true);
+      // Hiding label
+      PauseTransition visiblePause = new PauseTransition(Duration.seconds(3));
+      visiblePause.setOnFinished(event -> employeeLabel.setVisible(false));
+      visiblePause.play();
+      // Updating the labels
+      displayCurrentUser();
+    }
   }
 
   /**
@@ -353,12 +464,53 @@ public class Controller { // inspect code says can be package private, but won't
         Timestamp dateProduced = rs.getTimestamp(4);
         String creator = rs.getString(5);
 
-        // Creating a product from the database values
+        // Creating a production record from the database values
         ProductionRecord productionRecord =
             new ProductionRecord(productNum, productId, serialNum, dateProduced, creator);
 
         // Adding to the ArrayList
         productionRecords.add(productionRecord);
+      }
+
+      // Displaying to the text area
+      showProduction(productionRecords);
+
+      // Closing statement
+      stmt.close();
+
+    } catch (NullPointerException npe) {
+      System.out.println("Null Pointer");
+
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  /**
+   * This method is used to load the employees ArrayList with Employee objects created from the
+   * EMPLOYEE table in the database.
+   */
+  private void loadEmployees() {
+    try {
+      // Making a statement
+      // Inspect code says possible null pointer here but is already in a try block
+      Statement stmt = conn.createStatement();
+
+      // Executing query and collecting results
+      ResultSet rs = stmt.executeQuery("SELECT * FROM EMPLOYEE");
+
+      // Looping through results
+      while (rs.next()) {
+
+        // Storing data into variables
+        String fullName = rs.getString(1);
+        String password = rs.getString(2);
+
+        // Creating a product from the database values
+        Employee employee = new Employee(fullName, password);
+
+        // Adding to the ArrayList
+        employees.add(employee);
       }
 
       // Displaying to the text area
@@ -383,7 +535,6 @@ public class Controller { // inspect code says can be package private, but won't
    */
   private void addToProductionDB(ArrayList<ProductionRecord> productionRun) {
     try {
-
       for (ProductionRecord record : productionRun) {
         // Making a statement and running it
         PreparedStatement pstmt =
@@ -406,6 +557,29 @@ public class Controller { // inspect code says can be package private, but won't
   }
 
   /**
+   * This method adds the username, password, and email of an Employee object to the EMPLOYEE table
+   * in the database.
+   *
+   * @param employee The employee object who's details are to be added
+   */
+  private void addEmployeeToDatabase(Employee employee) {
+    try {
+
+      // Making a statement and running it
+      PreparedStatement pstmt =
+          conn.prepareStatement("INSERT INTO EMPLOYEE (FULL_NAME, PASSWORD)" + "VALUES (?,?)");
+
+      pstmt.setString(1, employee.getName().toString());
+      pstmt.setString(2, employee.getPassword());
+      pstmt.execute();
+      pstmt.close();
+
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  /**
    * This method sets up the existingProducts table and the chooseProduct list and associates them
    * with observable array lists containing the values that they need.
    */
@@ -422,36 +596,14 @@ public class Controller { // inspect code says can be package private, but won't
     chooseProduct.setItems(observableProductStrings);
   }
 
-  /** This method displays the production log to the production log text area. */
+  /**
+   * This method displays the production log to the production log text area.
+   *
+   * @param productionRun An ArrayList of all of the ProductionRecord that were created.
+   */
   private void showProduction(ArrayList<ProductionRecord> productionRun) {
     for (ProductionRecord record : productionRun) {
       productionLogTextArea.appendText(record.toString() + "\n");
-    }
-  }
-
-  /**
-   * This is a test class to demonstrate that the AudioPlayer and MoviePlayer classes are working
-   * properly.
-   */
-  private static void testMultimedia() {
-    AudioPlayer newAudioProduct =
-        new AudioPlayer(
-            "DP-X1A", "Onkyo", "DSD/FLAC/ALAC/WAV/AIFF/MQA/Ogg-Vorbis/MP3/AAC", "M3U/PLS/WPL");
-    Screen newScreen = new Screen("720x480", 40, 22);
-    MoviePlayer newMovieProduct =
-        new MoviePlayer("DBPOWER MK101", "OracleProduction", newScreen, MonitorType.LCD);
-    MoviePlayer newerMovieProduct =
-        new MoviePlayer("DBPOWER MK101", "OracleProduction", newScreen, MonitorType.LED);
-    ArrayList<MultimediaControl> productList = new ArrayList<>();
-    productList.add(newAudioProduct);
-    productList.add(newMovieProduct);
-    productList.add(newerMovieProduct);
-    for (MultimediaControl p : productList) {
-      System.out.println(p);
-      p.play();
-      p.stop();
-      p.next();
-      p.previous();
     }
   }
 
@@ -475,6 +627,41 @@ public class Controller { // inspect code says can be package private, but won't
       String allButLast = password.substring(0, password.length() - 1);
       // Returning the last character plus the result of this method called with allButLast
       return lastChar + reversePassword(allButLast);
+    }
+  }
+
+  /**
+   * This method is used to update the current user labels on all of the different tabs all at once.
+   */
+  private void displayCurrentUser() {
+    currentUserLabel.setText("Current User: " + currentEmployee.getUsername());
+    currentUserLabel1.setText("Current User: " + currentEmployee.getUsername());
+    currentUserLabel2.setText("Current User: " + currentEmployee.getUsername());
+    currentUserLabel3.setText("Current User: " + currentEmployee.getUsername());
+  }
+  /**
+   * This is a test class to demonstrate that the AudioPlayer and MoviePlayer classes are working
+   * properly.
+   */
+  private static void testMultimedia() {
+    AudioPlayer newAudioProduct =
+        new AudioPlayer(
+            "DP-X1A", "Onkyo", "DSD/FLAC/ALAC/WAV/AIFF/MQA/Ogg-Vorbis/MP3/AAC", "M3U/PLS/WPL");
+    Screen newScreen = new Screen("720x480", 40, 22);
+    MoviePlayer newMovieProduct =
+        new MoviePlayer("DBPOWER MK101", "OracleProduction", newScreen, MonitorType.LCD);
+    MoviePlayer newerMovieProduct =
+        new MoviePlayer("DBPOWER MK101", "OracleProduction", newScreen, MonitorType.LED);
+    ArrayList<MultimediaControl> productList = new ArrayList<>();
+    productList.add(newAudioProduct);
+    productList.add(newMovieProduct);
+    productList.add(newerMovieProduct);
+    for (MultimediaControl p : productList) {
+      System.out.println(p);
+      p.play();
+      p.stop();
+      p.next();
+      p.previous();
     }
   }
 }

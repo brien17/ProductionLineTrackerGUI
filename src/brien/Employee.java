@@ -4,8 +4,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Employee {
+  /** This is the employee's full name with a space between their first and last name. */
   private StringBuilder name;
+  /** This is the username created from the employee's full name. */
   private String username;
+
   private String password;
   private String email;
 
@@ -115,6 +118,28 @@ public class Employee {
     return matcher.find();
   }
 
+    public StringBuilder getName() {
+        return name;
+    }
+
+    /**
+   * This method is a getter for the password field.
+   *
+   * @return The password
+   */
+  public String getPassword() {
+    return password;
+  }
+
+  /**
+   * This is a getter for the username field.
+   *
+   * @return The username
+   */
+  String getUsername() {
+    return username;
+  }
+
   /**
    * This method generates a string that contains information about the Employee.
    *
@@ -129,14 +154,5 @@ public class Employee {
         + email
         + "\nInitial Password : "
         + password;
-  }
-
-  /**
-   * This is a getter for the username field.
-   *
-   * @return The username
-   */
-  String getUsername() {
-    return username;
   }
 }

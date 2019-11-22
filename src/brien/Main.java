@@ -29,7 +29,7 @@ public class Main extends Application {
   public void start(Stage primaryStage) throws Exception {
     Parent root = FXMLLoader.load(getClass().getResource("ProductionTabs.fxml"));
     primaryStage.setTitle("Production Records");
-    primaryStage.setScene(new Scene(root, 680, 700));
+    primaryStage.setScene(new Scene(root, 680, 720));
     primaryStage.show();
   }
 
