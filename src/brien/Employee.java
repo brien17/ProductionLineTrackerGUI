@@ -118,11 +118,16 @@ public class Employee {
     return matcher.find();
   }
 
-    public StringBuilder getName() {
-        return name;
-    }
+  /**
+   * This method is a getter for the name field.
+   *
+   * @return The name of the employee
+   */
+  public StringBuilder getName() {
+    return name;
+  }
 
-    /**
+  /**
    * This method is a getter for the password field.
    *
    * @return The password

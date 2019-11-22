@@ -16,7 +16,7 @@ This animation shows some of the features of my program in action.
 ## Documentation
 This program was documented using javadoc style comments.
 Documentation can be seen at: <br>
-<H1>Put a link here</H1>
+<H1>Put a link to github pages website doc here</H1>
 
 ## Getting started
 
@@ -31,8 +31,13 @@ Documentation can be seen at: <br>
 I am not seeking any contributions to this project, but you are free to download it and use or modify it as you wish.
 
 ## Acknowledgements
+* Professor Vanselow
+* docs.oracle.com
+* tutorialspoint.com
+* stackoverflow.com
 
 ## Problem Statement
+This was the problem statement used for the creation of this program.
 
 **Scenario**
 

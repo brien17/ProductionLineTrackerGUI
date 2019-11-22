@@ -24,12 +24,13 @@ should appear. -->
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane alignment="center" hgap="10" minHeight="720.0" minWidth="680.0" prefHeight="688.0" prefWidth="686.0" vgap="10" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="brien.Controller">
+<GridPane alignment="center" hgap="10" minHeight="720.0" minWidth="680.0" prefHeight="688.0" prefWidth="686.0" vgap="10"
+          xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="brien.Controller">
     <columnConstraints>
-        <ColumnConstraints />
+        <ColumnConstraints/>
     </columnConstraints>
     <rowConstraints>
-        <RowConstraints />
+        <RowConstraints/>
     </rowConstraints>
 
     <TabPane id="tab_pane" prefHeight="775.0" prefWidth="739.0" stylesheets="@Style.css" tabClosingPolicy="UNAVAILABLE">
@@ -37,24 +38,28 @@ should appear. -->
 
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
 
-                <Button id="button" layoutX="492.0" layoutY="589.0" mnemonicParsing="false" onMouseClicked="#recordProductionButtonAction" stylesheets="@Style.css" text="Record Production" />
-                <Label id="label" layoutX="14.0" layoutY="14.0" stylesheets="@Style.css" text="Choose Product" />
+                <Button id="button" layoutX="492.0" layoutY="589.0" mnemonicParsing="false"
+                        onMouseClicked="#recordProductionButtonAction" stylesheets="@Style.css"
+                        text="Record Production"/>
+                <Label id="label" layoutX="14.0" layoutY="14.0" stylesheets="@Style.css" text="Choose Product"/>
                 <ListView fx:id="chooseProduct" layoutX="14.0" layoutY="35.0" prefHeight="523.0" prefWidth="652.0">
                     <effect>
-                        <DropShadow height="10.0" radius="4.5" width="10.0" />
+                        <DropShadow height="10.0" radius="4.5" width="10.0"/>
                     </effect>
                 </ListView>
-                <Label id="label" layoutX="11.0" layoutY="568.0" stylesheets="@Style.css" text="Choose Quantity" />
+                <Label id="label" layoutX="11.0" layoutY="568.0" stylesheets="@Style.css" text="Choose Quantity"/>
                 <ComboBox fx:id="chooseQuantity" layoutX="14.0" layoutY="589.0" prefHeight="31.0" prefWidth="362.0">
                     <effect>
-                        <DropShadow height="10.0" radius="4.5" width="10.0" />
+                        <DropShadow height="10.0" radius="4.5" width="10.0"/>
                     </effect>
                 </ComboBox>
-            <Label fx:id="chooseQuantityLabel" layoutX="14.0" layoutY="626.0" prefHeight="21.0" prefWidth="369.0" styleClass="errorLabel" stylesheets="@Style.css">
-               <font>
-                  <Font size="20.0" />
-               </font></Label>
-            <Label fx:id="currentUserLabel1" layoutX="35.0" layoutY="655.0" prefHeight="21.0" prefWidth="330.0" />
+                <Label fx:id="chooseQuantityLabel" layoutX="14.0" layoutY="626.0" prefHeight="21.0" prefWidth="369.0"
+                       styleClass="errorLabel" stylesheets="@Style.css">
+                    <font>
+                        <Font size="20.0"/>
+                    </font>
+                </Label>
+                <Label fx:id="currentUserLabel1" layoutX="35.0" layoutY="655.0" prefHeight="21.0" prefWidth="330.0"/>
             </AnchorPane>
 
         </Tab>
@@ -64,45 +69,52 @@ should appear. -->
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                 <GridPane prefHeight="180.0" prefWidth="675.0">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="425.0" minWidth="10.0" prefWidth="178.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="536.0" minWidth="10.0" prefWidth="508.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="425.0" minWidth="10.0" prefWidth="178.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="536.0" minWidth="10.0" prefWidth="508.0"/>
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                     </rowConstraints>
-                    <Label id="label" stylesheets="@Style.css" text="Product Name" GridPane.halignment="CENTER" />
-                    <Label id="label" stylesheets="@Style.css" text="Manufacturer" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                    <Label id="label" stylesheets="@Style.css" text="Type" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                    <TextField id="user_text_field" fx:id="productName" prefHeight="31.0" prefWidth="287.0" stylesheets="@Style.css" GridPane.columnIndex="1">
+                    <Label id="label" stylesheets="@Style.css" text="Product Name" GridPane.halignment="CENTER"/>
+                    <Label id="label" stylesheets="@Style.css" text="Manufacturer" GridPane.halignment="CENTER"
+                           GridPane.rowIndex="1"/>
+                    <Label id="label" stylesheets="@Style.css" text="Type" GridPane.halignment="CENTER"
+                           GridPane.rowIndex="2"/>
+                    <TextField id="user_text_field" fx:id="productName" prefHeight="31.0" prefWidth="287.0"
+                               stylesheets="@Style.css" GridPane.columnIndex="1">
                         <effect>
-                            <DropShadow height="10.0" radius="4.5" width="10.0" />
+                            <DropShadow height="10.0" radius="4.5" width="10.0"/>
                         </effect>
                     </TextField>
-                    <TextField fx:id="productManufacturer" prefHeight="31.0" prefWidth="284.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                    <TextField fx:id="productManufacturer" prefHeight="31.0" prefWidth="284.0" GridPane.columnIndex="1"
+                               GridPane.rowIndex="1">
                         <effect>
-                            <DropShadow height="10.0" radius="4.5" width="10.0" />
+                            <DropShadow height="10.0" radius="4.5" width="10.0"/>
                         </effect>
                     </TextField>
-                    <ChoiceBox fx:id="productType" prefHeight="31.0" prefWidth="134.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                    <ChoiceBox fx:id="productType" prefHeight="31.0" prefWidth="134.0" GridPane.columnIndex="1"
+                               GridPane.rowIndex="2">
                         <effect>
-                            <DropShadow height="9.5" radius="4.375" width="10.0" />
+                            <DropShadow height="9.5" radius="4.375" width="10.0"/>
                         </effect>
                     </ChoiceBox>
 
-                    <Button id="button" alignment="CENTER_RIGHT" mnemonicParsing="false" onMouseClicked="#productionLineButtonAction" stylesheets="@Style.css" text="Add Product" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+                    <Button id="button" alignment="CENTER_RIGHT" mnemonicParsing="false"
+                            onMouseClicked="#productionLineButtonAction" stylesheets="@Style.css" text="Add Product"
+                            GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2"/>
                 </GridPane>
-                <Label id="label" layoutY="188.0" stylesheets="@Style.css" text="Existing Products" />
+                <Label id="label" layoutY="188.0" stylesheets="@Style.css" text="Existing Products"/>
                 <TableView fx:id="existingProducts" layoutY="209.0" prefHeight="439.0" prefWidth="686.0">
                     <columns>
-                        <TableColumn fx:id="epColId" prefWidth="125.0" text="Product ID" />
-                        <TableColumn fx:id="epColName" minWidth="0.0" prefWidth="125.0" text="Name" />
-                        <TableColumn fx:id="epColMan" prefWidth="125.0" text="Manufacturer" />
-                        <TableColumn fx:id="epColType" prefWidth="125.0" text="Item Type" />
+                        <TableColumn fx:id="epColId" prefWidth="125.0" text="Product ID"/>
+                        <TableColumn fx:id="epColName" minWidth="0.0" prefWidth="125.0" text="Name"/>
+                        <TableColumn fx:id="epColMan" prefWidth="125.0" text="Manufacturer"/>
+                        <TableColumn fx:id="epColType" prefWidth="125.0" text="Item Type"/>
                     </columns>
                 </TableView>
-            <Label fx:id="currentUserLabel2" layoutX="35.0" layoutY="655.0" prefHeight="21.0" prefWidth="330.0" />
+                <Label fx:id="currentUserLabel2" layoutX="35.0" layoutY="655.0" prefHeight="21.0" prefWidth="330.0"/>
             </AnchorPane>
 
         </Tab>
@@ -110,12 +122,13 @@ should appear. -->
 
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="650.0" prefWidth="680.0">
 
-                <TextArea fx:id="productionLogTextArea" layoutX="14.0" layoutY="14.0" prefHeight="622.0" prefWidth="652.0">
+                <TextArea fx:id="productionLogTextArea" layoutX="14.0" layoutY="14.0" prefHeight="622.0"
+                          prefWidth="652.0">
                     <effect>
-                        <DropShadow height="10.0" radius="4.5" width="10.0" />
+                        <DropShadow height="10.0" radius="4.5" width="10.0"/>
                     </effect>
                 </TextArea>
-            <Label fx:id="currentUserLabel3" layoutX="35.0" layoutY="655.0" prefHeight="21.0" prefWidth="330.0" />
+                <Label fx:id="currentUserLabel3" layoutX="35.0" layoutY="655.0" prefHeight="21.0" prefWidth="330.0"/>
 
             </AnchorPane>
 
@@ -124,36 +137,43 @@ should appear. -->
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                 <GridPane layoutX="3.0" layoutY="51.0" prefHeight="352.0" prefWidth="674.0" stylesheets="@Style.css">
                     <columnConstraints>
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="339.0" minWidth="10.0" prefWidth="177.0" />
-                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="339.0" minWidth="10.0" prefWidth="272.0" />
-                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="533.0" minWidth="10.0" prefWidth="332.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="339.0" minWidth="10.0"
+                                           prefWidth="177.0"/>
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="339.0" minWidth="10.0"
+                                           prefWidth="272.0"/>
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="533.0" minWidth="10.0"
+                                           prefWidth="332.0"/>
                     </columnConstraints>
                     <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                     </rowConstraints>
-                    <PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1">
+                    <PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.columnSpan="2"
+                                   GridPane.rowIndex="1">
                         <effect>
-                            <DropShadow height="10.0" radius="4.5" width="10.0" />
+                            <DropShadow height="10.0" radius="4.5" width="10.0"/>
                         </effect>
                     </PasswordField>
-                    <Button id="button" mnemonicParsing="false" onMouseClicked="#loginButtonAction" stylesheets="@Style.css" text="Login" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-               <TextField fx:id="fullNameTextField" GridPane.columnIndex="1" GridPane.columnSpan="2">
-                  <effect>
-                     <DropShadow height="10.0" radius="4.5" width="10.0" />
-                  </effect>
-               </TextField>
-               <Button id="button" mnemonicParsing="false" onMouseClicked="#createAccountButtonAction" stylesheets="@Style.css" text="Create Account" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                    <Label id="label" text="Full Name" />
-                    <Label id="label" text="Password" GridPane.rowIndex="1" />
+                    <Button id="button" mnemonicParsing="false" onMouseClicked="#loginButtonAction"
+                            stylesheets="@Style.css" text="Login" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+                    <TextField fx:id="fullNameTextField" GridPane.columnIndex="1" GridPane.columnSpan="2">
+                        <effect>
+                            <DropShadow height="10.0" radius="4.5" width="10.0"/>
+                        </effect>
+                    </TextField>
+                    <Button id="button" mnemonicParsing="false" onMouseClicked="#createAccountButtonAction"
+                            stylesheets="@Style.css" text="Create Account" GridPane.columnIndex="1"
+                            GridPane.rowIndex="2"/>
+                    <Label id="label" text="Full Name"/>
+                    <Label id="label" text="Password" GridPane.rowIndex="1"/>
                 </GridPane>
-            <Label fx:id="employeeLabel" layoutX="14.0" layoutY="423.0" prefHeight="30.0" prefWidth="655.0">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
-            <Label fx:id="currentUserLabel" layoutX="35.0" layoutY="655.0" prefHeight="21.0" prefWidth="330.0" />
+                <Label fx:id="employeeLabel" layoutX="14.0" layoutY="423.0" prefHeight="30.0" prefWidth="655.0">
+                    <font>
+                        <Font size="16.0"/>
+                    </font>
+                </Label>
+                <Label fx:id="currentUserLabel" layoutX="35.0" layoutY="655.0" prefHeight="21.0" prefWidth="330.0"/>
             </AnchorPane>
         </Tab>
 
