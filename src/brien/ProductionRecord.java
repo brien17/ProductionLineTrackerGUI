@@ -145,6 +145,15 @@ class ProductionRecord {
   }
 
   /**
+   * This method is a getter of the creator field.
+   *
+   * @return The creator of the product
+   */
+  String getCreator() {
+    return creator;
+  }
+
+  /**
    * This methods returns a string object containing information about the productionNumber,
    * productId, serialNumber, and dateProduced of the ProductionRecord, in a cleanly displayable
    * format.

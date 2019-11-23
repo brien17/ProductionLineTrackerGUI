@@ -581,12 +581,13 @@ public class Controller { // inspect code says can be package private, but won't
         // Making a statement and running it
         PreparedStatement pstmt =
             conn.prepareStatement(
-                "INSERT INTO PRODUCTIONRECORD (PRODUCT_ID, SERIAL_NUM, DATE_PRODUCED)"
-                    + "VALUES (?,?,?)");
+                "INSERT INTO PRODUCTIONRECORD (PRODUCT_ID, SERIAL_NUM, DATE_PRODUCED, CREATOR)"
+                    + "VALUES (?,?,?,?)");
 
         pstmt.setInt(1, record.getProductId());
         pstmt.setString(2, record.getSerialNumber());
         pstmt.setTimestamp(3, new Timestamp(record.getDateProduced().getTime()));
+        pstmt.setString(4, record.getCreator());
         pstmt.execute();
         pstmt.close();
       }
