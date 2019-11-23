@@ -29,7 +29,8 @@ This animation shows some of the features of my program in action.
 I am not seeking any contributions to this project, but you are free to download it and use or modify it as you wish.
 
 ## License
-
+This program is licensed under the GNU General Public License v3.0. You are free to use or modify this software as 
+desired. 
 
 ## Acknowledgements
 * Professor Vanselow
