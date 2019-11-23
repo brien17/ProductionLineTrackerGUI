@@ -11,14 +11,16 @@ Object-oriented programming concepts.
 ## Documentation
 This program was documented using javadoc style comments.
 Documentation can be seen at: <br>
-<H1>Put a link to github pages website doc here</H1>
+https://brien17.github.io/ProductionLineTrackerGUI/
 
 ## Demonstration
 This animation shows some of the features of my program in action. 
 ![Demonstration of program running](docs/ProductionLineTrackerGif.gif)
 
 ## Getting started
-<H1>Finish me</H1>
+To run this program you will need to have Java Runtime Environment installed. Available here: https://java.com
+Then simply download the zip of this repository and extract it. Run the file named "ProductionLineTrackerGUI.jar". 
+The program should open up in a new window.
 
 ## Built with
 * Java
