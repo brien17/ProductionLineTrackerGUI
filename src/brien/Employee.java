@@ -3,6 +3,11 @@ package brien;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Employee.java - This class is used to represent an employee of the production facility. It stores their full name
+ *
+ * @author Cameron Brien
+ */
 public class Employee {
   /** This is the employee's full name with a space between their first and last name. */
   private StringBuilder name;

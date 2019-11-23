@@ -8,18 +8,17 @@ student studying software engineering. This software was made utilizing the obje
 of Object-oriented programming. Some parts of this project are not integrated into the GUI and are only to demonstrate 
 Object-oriented programming concepts. 
 
-## Demonstration
-
-This animation shows some of the features of my program in action. 
-<H1>Put link to gif here</H1>
-
 ## Documentation
 This program was documented using javadoc style comments.
 Documentation can be seen at: <br>
 <H1>Put a link to github pages website doc here</H1>
 
-## Getting started
+## Demonstration
+This animation shows some of the features of my program in action. 
+![Demonstration of program running](docs/ProductionLineTrackerGif.gif)
 
+## Getting started
+<H1>Finish me</H1>
 
 ## Built with
 * Java
@@ -27,14 +26,23 @@ Documentation can be seen at: <br>
 * Hard Work
 
 ## Contributing 
-
 I am not seeking any contributions to this project, but you are free to download it and use or modify it as you wish.
+
+## License
+
 
 ## Acknowledgements
 * Professor Vanselow
 * docs.oracle.com
 * tutorialspoint.com
 * stackoverflow.com
+
+## Potential Improvements
+There are many things that could be added to improve this project. The main things that I would like to improve are the 
+utilization of the AudioPlayer and MoviePlayer classes. These are not used in the graphical user interface of the 
+program, as they were included primarily to facilitate understanding of object-oriented programming concepts. In the 
+future I would be interested in incorporating these into the main part of the program. Additionally, the login and employee 
+account system was added late into the development and could be better fleshed out and explained.
 
 ## Problem Statement
 This was the problem statement used for the creation of this program.
