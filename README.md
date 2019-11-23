@@ -18,8 +18,8 @@ This animation shows some of the features of my program in action.
 ![Demonstration of program running](docs/ProductionLineTrackerGif.gif)
 
 ## Getting started
-To run this program you will need to have Java Runtime Environment installed. Available here: https://java.com<br>
-Then simply download the zip of this repository and extract it. Run the file named "ProductionLineTrackerGUI.jar". 
+To run this program you will need to have the Java Runtime Environment installed.<br> Available here: https://java.com<br>
+Then simply download the zip of this repository and extract it. Then run the file named "ProductionLineTrackerGUI.jar". 
 The program should open up in a new window.
 
 ## Built with
