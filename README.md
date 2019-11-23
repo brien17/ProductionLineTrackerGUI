@@ -47,6 +47,11 @@ program, as they were included primarily to facilitate understanding of object-o
 future I would be interested in incorporating these into the main part of the program. Additionally, the login and employee 
 account system was added late into the development and could be better fleshed out and explained.
 
+## Key Programming Concepts Utilized
+The main learning goal of this program was to understand more about object-oriented design by creating a program that 
+utilized many of the concepts of object-oriented programming. This project utilizes design ideas, such as, encapsulation
+inheritance, and polymorphism to demonstrate proficiency with object-oriented design concepts.
+
 ## Problem Statement
 This was the problem statement used for the creation of this program.
 
