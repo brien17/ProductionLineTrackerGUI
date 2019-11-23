@@ -7,11 +7,11 @@ package brien;
  * @author Cameron Brien
  */
 public class MoviePlayer extends Product implements MultimediaControl {
-  // fields
+  /** This field holds monitor type of the movie player. */
   private MonitorType monitorType;
-  private Screen screen;
 
-  // methods
+  /** This field holds the screen that the movie player has. */
+  private Screen screen;
 
   /**
    * This is a constructor for the MoviePlayer class. This constructor accepts arguments for the

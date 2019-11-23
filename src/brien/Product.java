@@ -8,13 +8,18 @@ package brien;
  * @author Cameron Brien
  */
 public abstract class Product implements Item {
-  // Fields
-  private int id;
-  private String name;
-  private String manufacturer;
-  private ItemType type;
 
-  // Methods
+  /** This field holds a unique identifier for each product. */
+  private int id;
+
+  /** This field holds the name of the product. */
+  private String name;
+
+  /** This field holds the manufacturer of the product. */
+  private String manufacturer;
+
+  /** This field holds the item type of the product. */
+  private ItemType type;
 
   /**
    * This is a constructor for the Product class. This constructor takes in arguments for the name,

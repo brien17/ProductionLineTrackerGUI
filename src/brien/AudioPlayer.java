@@ -7,11 +7,12 @@ package brien;
  * @author Cameron Brien
  */
 public class AudioPlayer extends Product implements MultimediaControl {
-  // fields
-  private String supportedAudioFormats;
-  private String supportedPlaylistFormats;
 
-  // methods
+  /** This field is used to hold the types of audio file the audio player can play. */
+  private String supportedAudioFormats;
+
+  /** This field holds the playlist format that is used by the audio player. */
+  private String supportedPlaylistFormats;
 
   /**
    * This is a constructor for the AudioPlayer class. This constructor accepts arguments for the

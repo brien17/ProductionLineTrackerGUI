@@ -7,13 +7,15 @@ package brien;
  * @author Cameron Brien
  */
 public class Screen implements ScreenSpec {
-  // fields
-  private String resolution;
-  private int refreshRate;
-  private int responseTime;
 
-  // methods
-  // constructor
+  /** This field holds the resolution of the screen. */
+  private final String resolution;
+
+  /** This field holds the refresh rate of the screen. */
+  private int refreshRate;
+
+  /** This field holds response time of the screen. */
+  private int responseTime;
 
   /**
    * This is a constructor for the screen class and accepts arguments for the resolution,

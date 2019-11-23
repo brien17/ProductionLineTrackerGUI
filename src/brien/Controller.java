@@ -32,70 +32,111 @@ import javafx.util.Duration;
  * @author Cameron Brien
  */
 public class Controller { // inspect code says can be package private, but won't compile if it is
-  // Fields
+
+  /** This TextField is used to enter the name of a new product. */
   @FXML private TextField productName;
 
+  /** This TextField is used to enter the manufacturer of a new product. */
   @FXML private TextField productManufacturer;
 
+  /** This ChoiceBox is used to select the item type of a new product. */
   @FXML private ChoiceBox<ItemType> productType;
 
+  /**
+   * This ListView is used to hold information about the products that employee's can produce and
+   * allow them to select the one they want from the list.
+   */
   @FXML private ListView<String> chooseProduct;
 
+  /** This ComboBox is used to allow the employee to specify how many of a product were created. */
   @FXML private ComboBox<String> chooseQuantity;
 
+  /** This TextArea is used to display the production log. */
   @FXML private TextArea productionLogTextArea;
 
+  /** This TableView is used to display the product that are available to produce. */
   @FXML private TableView<Product> existingProducts;
 
+  /** The column for the product ID. */
   @FXML private TableColumn<?, ?> epColId;
 
+  /** The column for the product name. */
   @FXML private TableColumn<?, ?> epColName;
 
+  /** The column for the product manufacturer. */
   @FXML private TableColumn<?, ?> epColMan;
 
+  /** The column for the product item type. */
   @FXML private TableColumn<?, ?> epColType;
 
+  /**
+   * This Label informs the user that the information was saved when they record production and
+   * notifies them when they enter an invalid value for the number of products produced.
+   */
   @FXML private Label chooseQuantityLabel;
 
+  /** This TextField is used to enter the full name of the employee. */
   @FXML private TextField fullNameTextField;
 
+  /** This PasswordField is used to enter the password for the employee account. */
   @FXML private PasswordField passwordField;
 
+  /** This Label is used to display information about the user logging in or creating an account. */
   @FXML private Label employeeLabel;
 
+  /** This Label is used display the employee who is currently logged in on the employee screen. */
   @FXML private Label currentUserLabel;
 
+  /**
+   * This Label is used display the employee who is currently logged in on the record production
+   * screen.
+   */
   @FXML private Label currentUserLabel1;
 
+  /**
+   * This Label is used display the employee who is currently logged in on the product line screen.
+   */
   @FXML private Label currentUserLabel2;
 
+  /**
+   * This Label is used display the employee who is currently logged in on the production log
+   * screen.
+   */
   @FXML private Label currentUserLabel3;
 
-  // Declaring the connection object so it can be shared throughout the program
+  /**
+   * This is the Connection object used by all of the methods that write to or read from the
+   * database.
+   */
   private Connection conn;
 
-  // Creating an ArrayList to hold products
+  /** This ArrayList holds the product that are currently available. */
   private final ArrayList<Product> productLine = new ArrayList<>();
 
-  // Creating an ArrayList to hold production records
+  /** This ArrayList is used to hold the record of production. */
   private final ArrayList<ProductionRecord> productionRecords = new ArrayList<>();
 
-  // Creating an ArrayList to hold all employees
+  /** This ArrayList is used to hold the employees. */
   private final ArrayList<Employee> employees = new ArrayList<>();
 
-  // Creating ObservableArrayLists to hold the values for the table and list view
+  /** This ObservableList is used to display the products in the existingProduct TableView. */
   private final ObservableList<Product> observableProductLine = FXCollections.observableArrayList();
+  /**
+   * This ObservableList is used to display information about the products to the ChooseProduct
+   * ListView.
+   */
   private final ObservableList<String> observableProductStrings =
       FXCollections.observableArrayList();
 
-  // Keeping track of the production number and product id's
+  /** This field holds the last product ID used in the program. */
   private int lastId;
+
+  /** This field holds the production number to be used by the next created product. */
   private int currentProductionNumber;
 
-  // Creating the current user
+  /** This field holds the employee account for the employee who is currently logged in. */
   private Employee currentEmployee = new Employee("", "");
 
-  // Methods
   /**
    * This method runs when the app is opened and populates the productType and chooseQuantity boxes.
    * It them connects to the database and populates the product line arrayList with the data in the
@@ -320,7 +361,8 @@ public class Controller { // inspect code says can be package private, but won't
     } else if (newEmployee.getPassword().equals("pw")) {
       // Display message to user
       employeeLabel.setText(
-          "Please use an uppercase letter, lowercase letter, and special character in your password");
+          "Please use an uppercase letter, lowercase letter, and special character in your "
+              + "password");
       employeeLabel.setStyle("-fx-text-fill: firebrick");
       employeeLabel.setVisible(true);
       // Hiding label
@@ -639,6 +681,7 @@ public class Controller { // inspect code says can be package private, but won't
     currentUserLabel2.setText("Current User: " + currentEmployee.getUsername());
     currentUserLabel3.setText("Current User: " + currentEmployee.getUsername());
   }
+
   /**
    * This is a test class to demonstrate that the AudioPlayer and MoviePlayer classes are working
    * properly.

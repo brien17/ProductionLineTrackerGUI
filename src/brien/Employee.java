@@ -4,17 +4,20 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Employee.java - This class is used to represent an employee of the production facility. It stores their full name
+ * Employee.java - This class is used to represent an employee of the production facility. It stores
+ * their full name,
  *
  * @author Cameron Brien
  */
-public class Employee {
-  /** This is the employee's full name with a space between their first and last name. */
-  private StringBuilder name;
-  /** This is the username created from the employee's full name. */
-  private String username;
+class Employee {
 
+  /** This field holds the employee's full name with a space between their first and last name. */
+  private StringBuilder name;
+  /** This field holds the username created from the employee's full name. */
+  private String username;
+  /** This field holds the password used by the employee. */
   private String password;
+  /** This field holds the employee's email address. */
   private String email;
 
   /**
@@ -64,10 +67,14 @@ public class Employee {
     final Pattern pattern = Pattern.compile(regex, Pattern.MULTILINE);
     final Matcher matcher = pattern.matcher(name);
     // Saving first and last name
-    matcher.find();
-    String firstName = matcher.group(0);
-    matcher.find();
-    String lastName = matcher.group(0);
+    String firstName = "";
+    String lastName = "";
+    if (matcher.find()) {
+      firstName = matcher.group(0);
+    }
+    if (matcher.find()) {
+      lastName = matcher.group(0);
+    }
     // Creating email
     email = firstName.toLowerCase() + "." + lastName.toLowerCase() + "@oracleacademy.Test";
   }
@@ -83,10 +90,16 @@ public class Employee {
     final String regex = "[a-zA-Z]+";
     final Pattern pattern = Pattern.compile(regex, Pattern.MULTILINE);
     final Matcher matcher = pattern.matcher(name);
-    matcher.find();
-    String firstName = matcher.group(0);
-    matcher.find();
-    String lastName = matcher.group(0);
+    // Getting first and last name
+    String firstName = "";
+    String lastName = "";
+    if (matcher.find()) {
+      firstName = matcher.group(0);
+    }
+    if (matcher.find()) {
+      lastName = matcher.group(0);
+    }
+    // Creating username
     username = firstName.toLowerCase().charAt(0) + lastName.toLowerCase();
   }
 

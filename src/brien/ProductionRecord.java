@@ -9,10 +9,19 @@ import java.util.Date;
  * @author Cameron Brien
  */
 class ProductionRecord {
+  /** This field holds a unique number for each production record. */
   private int productionNumber;
+
+  /** This field holds the ID of the product that is created. */
   private int productId;
+
+  /** This field holds the serial number for the product produced. */
   private String serialNumber;
+
+  /** This field holds the date that the product was produced. */
   private Date dateProduced;
+
+  /** This field holds the username of the employee who created the product. */
   private String creator;
 
   /**
