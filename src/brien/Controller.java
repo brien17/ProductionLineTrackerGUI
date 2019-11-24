@@ -426,6 +426,9 @@ public class Controller { // inspect code says can be package private, but won't
    */
   private void loadProductLine() {
     try {
+      // Setting lastId to zero
+      lastId = 0;
+
       // Making a statement
       // Inspect code says possible null pointer here but is already in a try block
       Statement stmt = conn.createStatement();
@@ -435,6 +438,8 @@ public class Controller { // inspect code says can be package private, but won't
 
       // Looping through results
       while (rs.next()) {
+        // Incrementing lastId
+        lastId++;
         // Storing data into variables
         int id = rs.getInt(1);
         String name = rs.getString(2);
@@ -465,10 +470,6 @@ public class Controller { // inspect code says can be package private, but won't
         observableProductLine.add(product);
         observableProductStrings.add(product.toString());
       }
-
-      // Getting the last index to create a new product with later
-      lastId = productLine.get(productLine.size() - 1).getId();
-
       // Closing statement
       stmt.close();
     } catch (NullPointerException npe) {

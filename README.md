@@ -2,7 +2,7 @@
 This is a project that I did for my Object Oriented Programming class. The goal of this project was to create software 
 that could be used by a fictional production facility that makes media players. This product was designed to have a 
 graphical user interface that would allow the user to track the production of products, add new products to be produced,
-create an employee account, and view the products that have been produced already. The information about the products is
+create an employee account, and view the products that have already been created. The information about the products is
 stored in a database so that it can be saved between uses. This project was completed during my Junior year as an FGCU 
 student studying software engineering. This software was made utilizing the object oriented style to learn the concepts
 of Object-oriented programming. Some parts of this project are not integrated into the GUI and are only to demonstrate 
@@ -44,7 +44,7 @@ desired.
 There are many things that could be added to improve this project. The main things that I would like to improve are the 
 utilization of the AudioPlayer and MoviePlayer classes. These are not used in the graphical user interface of the 
 program, as they were included primarily to facilitate understanding of object-oriented programming concepts. In the 
-future I would be interested in incorporating these into the main part of the program. Additionally, the login and employee 
+future, I would be interested in incorporating these into the main part of the program. Additionally, the login and employee 
 account system was added late into the development and could be better fleshed out and explained.
 
 ## Key Programming Concepts Utilized
