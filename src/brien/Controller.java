@@ -556,9 +556,6 @@ public class Controller { // inspect code says can be package private, but won't
         employees.add(employee);
       }
 
-      // Displaying to the text area
-      showProduction(productionRecords);
-
       // Closing statement
       stmt.close();
 
