@@ -12,7 +12,7 @@ Object-oriented programming concepts.
 This program was documented using javadoc style comments.
 Documentation can be seen at: <br>
 https://brien17.github.io/ProductionLineTrackerGUI/
-Class diagram can be viewed here: <br>
+<br> Class diagram can be viewed here: <br>
 https://github.com/brien17/ProductionLineTrackerGUI/blob/master/docs/Class%20Diagram.png
 
 ## Demonstration
