@@ -2,9 +2,6 @@
   <artifact type="jar" name="ProductionLineTrackerGUI:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/ProductionLineTrackerGUI_jar</output-path>
     <root id="archive" name="ProductionLineTrackerGUI.jar">
-      <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
-      </element>
       <element id="module-output" name="ProductionLineTrackerGUI" />
       <element id="extracted-dir" path="C:/Program Files (x86)/H2/bin/h2-1.4.199.jar" path-in-jar="/" />
     </root>
