@@ -75,6 +75,12 @@ public class Controller { // inspect code says can be package private, but won't
    */
   @FXML private Label chooseQuantityLabel;
 
+  /**
+   * This Label informs the user when they have attempted to enter invalid product details on the
+   * Product Line tab.
+   */
+  @FXML private Label productLineErrorLabel;
+
   /** This TextField is used to enter the full name of the employee. */
   @FXML private TextField fullNameTextField;
 
@@ -144,6 +150,7 @@ public class Controller { // inspect code says can be package private, but won't
    */
   @FXML
   public void initialize() {
+
     // Displaying the current user
     displayCurrentUser();
 
@@ -182,6 +189,7 @@ public class Controller { // inspect code says can be package private, but won't
     // Selecting the first item
     chooseProduct.getSelectionModel().selectFirst();
     chooseQuantity.getSelectionModel().selectFirst();
+    productType.getSelectionModel().selectFirst();
   }
 
   /**
@@ -190,13 +198,16 @@ public class Controller { // inspect code says can be package private, but won't
    */
   @FXML
   public void productionLineButtonAction() {
-    System.out.println("production line button clicked");
-
-    // Getting user input values
-    String name = productName.getText();
-    String manufacturer = productManufacturer.getText();
-    ItemType item = productType.getValue();
     try {
+      // Throwing an exception if one of the fields is left blank
+      if (productName.getText().isEmpty() || productManufacturer.getText().isEmpty()) {
+        throw new NullPointerException();
+      }
+      // Getting user input values
+      String name = productName.getText();
+      String manufacturer = productManufacturer.getText();
+      ItemType item = productType.getValue();
+
       // Incrementing the last ID value
       lastId++;
 
@@ -223,11 +234,18 @@ public class Controller { // inspect code says can be package private, but won't
       pstmt.execute();
       pstmt.close();
 
-    } catch (NullPointerException npe) {
-      System.out.println("Please complete all fields");
+    } catch (NullPointerException n) {
+      // Display message to user
+      productLineErrorLabel.setText("Please complete all fields");
+      productLineErrorLabel.setStyle("-fx-text-fill: firebrick");
+      productLineErrorLabel.setVisible(true);
+
+      // Hiding label
+      PauseTransition visiblePause = new PauseTransition(Duration.seconds(3));
+      visiblePause.setOnFinished(event -> productLineErrorLabel.setVisible(false));
+      visiblePause.play();
     } catch (Exception e) {
       e.printStackTrace();
-      System.out.println("ERROR");
     }
   }
 
