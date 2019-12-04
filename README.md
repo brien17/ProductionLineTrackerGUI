@@ -22,7 +22,7 @@ This animation shows some of the features of my program in action.
 ## Getting started
 
 1. To run this program you will need to have the Java Runtime Environment installed.<br> Available here: https://java.com<br>
-2. Click the "Clone or download" button.
+2. Click the "Clone or download" button on this repository.
 3. Click the "Download ZIP" button.
 4. Extract the downloaded folder.
 5. In the extracted folder, run the "ProductionLineTrackerGUI.jar" file.
